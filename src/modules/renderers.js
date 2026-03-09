@@ -161,7 +161,8 @@ function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
     link.href = contentUrl;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.textContent = "Original oeffnen";
+    link.textContent = "Original öffnen";
+    link.style.display = "block";
     card.appendChild(link);
   } else {
     const missingContent = document.createElement("p");
@@ -185,9 +186,39 @@ function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
   detailsEl.className = "tag-line";
   detailsEl.innerHTML = `encodingFormat: ${format} <br/> width: ${width} <br/> height: ${height}`;
 
+  const mediaId = getMediaLookupId(media);
+  if (mediaId) {
+    const internalLookupLink = document.createElement("a");
+    internalLookupLink.href = `index.html?id=${encodeURIComponent(mediaId)}`;
+    internalLookupLink.textContent = "Medium als Objekt abfragen";
+    internalLookupLink.style.display = "block";
+    card.appendChild(internalLookupLink);
+  } else {
+    const missingId = document.createElement("p");
+    missingId.className = "warn";
+    missingId.textContent = "keine identifier/@id fuer Medien-Abfrage vorhanden";
+    card.appendChild(missingId);
+  }
+
   card.appendChild(tagsEl);
   card.appendChild(detailsEl);
   return card;
+}
+
+function getMediaLookupId(media) {
+  const identifier = String(safeGet(media, "identifier", "")).trim();
+  if (identifier) {
+    return identifier;
+  }
+
+  const atId = String(safeGet(media, "@id", "")).trim();
+  if (!atId) {
+    return "";
+  }
+
+  const withoutQuery = atId.split("?")[0];
+  const segments = withoutQuery.split("/").filter(Boolean);
+  return segments[segments.length - 1] || "";
 }
 
 export function renderAccommodationSection(container, payload) {
