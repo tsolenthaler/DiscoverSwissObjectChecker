@@ -50,6 +50,7 @@ function init() {
   reloadConfigSelect();
   clearResultSections();
   renderStatus(elements.status, "Bereit", "info");
+  applySearchFromUrl();
 }
 
 function ensureDefaultConfig() {
@@ -134,14 +135,16 @@ function reloadConfigSelect() {
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
+  await executeSearch(elements.objectInput.value, elements.endpointOverride.value);
+}
+
+async function executeSearch(rawInput, endpointOverride = "") {
+
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
     return;
   }
-
-  const rawInput = elements.objectInput.value;
-  const endpointOverride = elements.endpointOverride.value;
 
   let parsed;
   try {
@@ -150,6 +153,8 @@ async function handleSearchSubmit(event) {
     renderStatus(elements.status, error.message, "error");
     return;
   }
+
+  syncSearchParams(parsed.id, endpointOverride || "");
 
   elements.fetchButton.disabled = true;
   renderStatus(elements.status, "Lade Daten...", "info");
@@ -182,6 +187,37 @@ async function handleSearchSubmit(event) {
   } finally {
     elements.fetchButton.disabled = false;
   }
+}
+
+function syncSearchParams(id, endpointOverride) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("id", id);
+
+  if (endpointOverride && ENDPOINTS.includes(endpointOverride)) {
+    url.searchParams.set("endpoint", endpointOverride);
+  } else {
+    url.searchParams.delete("endpoint");
+  }
+
+  window.history.replaceState({}, "", url);
+}
+
+function applySearchFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const queryId = params.get("id");
+  const queryEndpoint = params.get("endpoint");
+
+  if (!queryId) {
+    return;
+  }
+
+  elements.objectInput.value = queryId;
+
+  if (queryEndpoint && ENDPOINTS.includes(queryEndpoint)) {
+    elements.endpointOverride.value = queryEndpoint;
+  }
+
+  void executeSearch(queryId, elements.endpointOverride.value);
 }
 
 function clearResultSections() {
