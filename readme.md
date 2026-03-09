@@ -6,6 +6,7 @@ Produktionsreife, statische Webapp zum Pruefen von discover.swiss Objektdaten pe
 - GET-Abfragen gegen discover.swiss Info API (TEST und PROD)
 - Konfigurationsverwaltung: erstellen, bearbeiten, loeschen, laden, importieren, exportieren
 - Pro Konfiguration speicherbarer API-Key (`Ocp-Apim-Subscription-Key`)
+- Optionales Scope-Textfeld direkt in der Suche (Standard: leer)
 - Direkter Aufruf per URL-Parameter, z. B. `index.html?id=civ_s9t_aaeiccsu-bqdq-eagu-jfij-qiqacbfiqaib`
 - Default-Konfiguration fuer TEST mit `project=tso-test`
 - ID-Parsing fuer reine IDs und Pfadformat (`/endpoint/id`)
@@ -68,6 +69,8 @@ Dann `http://localhost:8080` aufrufen.
 - `index.html?id=<objekt-id>` startet die Abfrage direkt beim Laden der Seite.
 - Optional kann `endpoint` gesetzt werden, falls die ID kein eindeutiges Prefix hat:
   - `index.html?id=<objekt-id>&endpoint=lodgingbusinesses`
+- Optional kann `scope` gesetzt werden:
+  - `index.html?id=<objekt-id>&scope=partner:read`
 
 ## API-Konfiguration pflegen
 - Base-URLs und Default-Config: `src/modules/constants.js`

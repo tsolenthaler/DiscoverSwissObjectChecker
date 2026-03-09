@@ -26,6 +26,7 @@ const elements = {
   searchForm: document.getElementById("searchForm"),
   objectInput: document.getElementById("objectInput"),
   endpointOverride: document.getElementById("endpointOverride"),
+  scopeInput: document.getElementById("scopeInput"),
   fetchButton: document.getElementById("fetchButton"),
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
@@ -135,10 +136,14 @@ function reloadConfigSelect() {
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
-  await executeSearch(elements.objectInput.value, elements.endpointOverride.value);
+  await executeSearch(
+    elements.objectInput.value,
+    elements.endpointOverride.value,
+    elements.scopeInput.value
+  );
 }
 
-async function executeSearch(rawInput, endpointOverride = "") {
+async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
 
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
@@ -154,13 +159,19 @@ async function executeSearch(rawInput, endpointOverride = "") {
     return;
   }
 
-  syncSearchParams(parsed.id, endpointOverride || "");
+  const normalizedScope = String(scopeInput || "").trim();
+  syncSearchParams(parsed.id, endpointOverride || "", normalizedScope);
 
   elements.fetchButton.disabled = true;
   renderStatus(elements.status, "Lade Daten...", "info");
 
   try {
-    const { json, requestUrl } = await fetchObjectById(activeConfig, parsed.endpoint, parsed.id);
+    const { json, requestUrl } = await fetchObjectById(
+      activeConfig,
+      parsed.endpoint,
+      parsed.id,
+      { scope: normalizedScope }
+    );
     state.lastPayload = json;
 
     renderObjectMeta(elements.objectMeta, {
@@ -189,7 +200,7 @@ async function executeSearch(rawInput, endpointOverride = "") {
   }
 }
 
-function syncSearchParams(id, endpointOverride) {
+function syncSearchParams(id, endpointOverride, scope) {
   const url = new URL(window.location.href);
   url.searchParams.set("id", id);
 
@@ -199,6 +210,12 @@ function syncSearchParams(id, endpointOverride) {
     url.searchParams.delete("endpoint");
   }
 
+  if (scope) {
+    url.searchParams.set("scope", scope);
+  } else {
+    url.searchParams.delete("scope");
+  }
+
   window.history.replaceState({}, "", url);
 }
 
@@ -206,6 +223,7 @@ function applySearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const queryId = params.get("id");
   const queryEndpoint = params.get("endpoint");
+  const queryScope = params.get("scope");
 
   if (!queryId) {
     return;
@@ -217,7 +235,11 @@ function applySearchFromUrl() {
     elements.endpointOverride.value = queryEndpoint;
   }
 
-  void executeSearch(queryId, elements.endpointOverride.value);
+  if (queryScope) {
+    elements.scopeInput.value = queryScope;
+  }
+
+  void executeSearch(queryId, elements.endpointOverride.value, elements.scopeInput.value);
 }
 
 function clearResultSections() {

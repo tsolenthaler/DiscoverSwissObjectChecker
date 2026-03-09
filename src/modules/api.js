@@ -1,7 +1,8 @@
-export function buildApiUrl(config, endpoint, objectId) {
+export function buildApiUrl(config, endpoint, objectId, options = {}) {
   const base = String(config.baseUrl || "").replace(/\/+$/, "");
   const safeEndpoint = String(endpoint || "").replace(/^\/+/, "");
   const safeId = encodeURIComponent(String(objectId || "").trim());
+  const scope = String(options.scope || "").trim();
 
   if (!base || !safeEndpoint || !safeId) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
@@ -15,17 +16,21 @@ export function buildApiUrl(config, endpoint, objectId) {
   if (config.language) {
     url.searchParams.set("language", config.language);
   }
+  if (scope) {
+    url.searchParams.set("scope", scope);
+  }
 
   return url.toString();
 }
 
-export async function fetchObjectById(config, endpoint, objectId) {
+export async function fetchObjectById(config, endpoint, objectId, options = {}) {
   const apiKey = String(config?.apiKey || "").trim();
+  const scope = String(options?.scope || "").trim();
   if (!apiKey) {
     throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
   }
 
-  const requestUrl = buildApiUrl(config, endpoint, objectId);
+  const requestUrl = buildApiUrl(config, endpoint, objectId, { scope });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
 
@@ -34,6 +39,10 @@ export async function fetchObjectById(config, endpoint, objectId) {
       Accept: "application/json",
       "Ocp-Apim-Subscription-Key": apiKey
     };
+
+    if (scope) {
+      headers.scope = scope;
+    }
 
     const response = await fetch(requestUrl, {
       method: "GET",
