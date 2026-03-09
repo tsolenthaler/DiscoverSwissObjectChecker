@@ -54,6 +54,7 @@ export const DEFAULT_CONFIG = {
   environment: "test",
   baseUrl: API_BASE_URLS.test,
   project: "tso-test",
+  apiKey: "",
   language: "",
   lastUsedAt: new Date().toISOString()
 };

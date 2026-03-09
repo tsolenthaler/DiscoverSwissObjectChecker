@@ -20,6 +20,11 @@ export function buildApiUrl(config, endpoint, objectId) {
 }
 
 export async function fetchObjectById(config, endpoint, objectId) {
+  const apiKey = String(config?.apiKey || "").trim();
+  if (!apiKey) {
+    throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
+  }
+
   const requestUrl = buildApiUrl(config, endpoint, objectId);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
@@ -28,7 +33,8 @@ export async function fetchObjectById(config, endpoint, objectId) {
     const response = await fetch(requestUrl, {
       method: "GET",
       headers: {
-        Accept: "application/json"
+        Accept: "application/json",
+        "Ocp-Apim-Subscription-Key": apiKey
       },
       signal: controller.signal
     });

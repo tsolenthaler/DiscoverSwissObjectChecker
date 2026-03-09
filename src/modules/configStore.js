@@ -15,6 +15,7 @@ function normalizeConfig(config) {
     environment: config.environment === "prod" ? "prod" : "test",
     baseUrl: String(config.baseUrl || "").trim(),
     project: String(config.project || "").trim(),
+    apiKey: String(config.apiKey || "").trim(),
     language: String(config.language || "").trim(),
     lastUsedAt: config.lastUsedAt || nowIso()
   };

@@ -38,6 +38,7 @@ const elements = {
   configEnv: document.getElementById("configEnv"),
   configBaseUrl: document.getElementById("configBaseUrl"),
   configProject: document.getElementById("configProject"),
+  configApiKey: document.getElementById("configApiKey"),
   configLanguage: document.getElementById("configLanguage"),
 
   saveConfigButton: document.getElementById("saveConfigButton"),
@@ -94,6 +95,7 @@ function bindEvents() {
     elements.configEnv.value = "test";
     elements.configBaseUrl.value = API_BASE_URLS.test;
     elements.configProject.value = "tso-test";
+    elements.configApiKey.value = "";
     elements.configLanguage.value = "";
     renderStatus(elements.status, "Neue Konfiguration kann jetzt gespeichert werden.", "info");
   });
@@ -217,6 +219,7 @@ function collectConfigFormValues() {
     environment: elements.configEnv.value,
     baseUrl: elements.configBaseUrl.value,
     project: elements.configProject.value,
+    apiKey: elements.configApiKey.value,
     language: elements.configLanguage.value
   };
 }
@@ -224,8 +227,12 @@ function collectConfigFormValues() {
 function handleSaveConfig() {
   const values = collectConfigFormValues();
 
-  if (!values.name || !values.baseUrl || !values.project) {
-    renderStatus(elements.status, "Name, Base URL und Project sind erforderlich.", "warn");
+  if (!values.name || !values.baseUrl || !values.project || !values.apiKey) {
+    renderStatus(
+      elements.status,
+      "Name, Base URL, Project und API-Key sind erforderlich.",
+      "warn"
+    );
     return;
   }
 
@@ -267,6 +274,7 @@ function loadConfigToForm(configId) {
   elements.configEnv.value = cfg.environment;
   elements.configBaseUrl.value = cfg.baseUrl;
   elements.configProject.value = cfg.project;
+  elements.configApiKey.value = cfg.apiKey || "";
   elements.configLanguage.value = cfg.language || "";
 }
 
