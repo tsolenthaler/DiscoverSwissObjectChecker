@@ -92,7 +92,12 @@ export function markConfigAsUsed(configId) {
   if (!config) {
     return null;
   }
-  return saveConfig({ ...config, lastUsedAt: nowIso() });
+
+  // Preserve the currently active config; usage tracking must not switch selection.
+  const previouslyActiveId = getActiveConfigId();
+  const updated = saveConfig({ ...config, lastUsedAt: nowIso() });
+  setActiveConfigId(previouslyActiveId);
+  return updated;
 }
 
 export function exportConfigs() {

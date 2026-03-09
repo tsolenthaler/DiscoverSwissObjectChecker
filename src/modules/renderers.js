@@ -77,6 +77,53 @@ export function renderMediaSection(container, payload) {
   container.append(primaryWrap, galleryWrap);
 }
 
+export function renderDescriptionSection(container, payload) {
+  container.innerHTML = "";
+
+  const shortDescription = safeGet(payload, "disambiguatingDescription", "");
+  const description = safeGet(payload, "description", "");
+
+  const list = document.createElement("dl");
+  list.className = "meta-grid";
+
+  appendDescriptionRow(
+    list,
+    "Kurzbeschreibung",
+    normalizeDescriptionValue(shortDescription, "Keine Kurzbeschreibung vorhanden.")
+  );
+  appendDescriptionRow(
+    list,
+    "Beschreibungs-Text",
+    normalizeDescriptionValue(description, "Kein Beschreibungs-Text vorhanden.")
+  );
+
+  container.appendChild(list);
+}
+
+function appendDescriptionRow(list, label, value) {
+  const dt = document.createElement("dt");
+  dt.textContent = label;
+  const dd = document.createElement("dd");
+  dd.textContent = value;
+  list.append(dt, dd);
+}
+
+function normalizeDescriptionValue(value, fallback) {
+  if (value === null || value === undefined || value === "") {
+    return fallback;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length ? value.map((entry) => String(entry)).join(" | ") : fallback;
+  }
+
+  if (typeof value === "object") {
+    return JSON.stringify(value);
+  }
+
+  return String(value);
+}
+
 function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
   const card = document.createElement("article");
   card.className = "media-card";

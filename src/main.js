@@ -10,6 +10,7 @@ import {
 import { fetchObjectById } from "./modules/api.js";
 import {
   renderAccommodationSection,
+  renderDescriptionSection,
   renderLinksSection,
   renderMediaSection,
   renderObjectMeta,
@@ -32,6 +33,7 @@ const elements = {
   configSelect: document.getElementById("configSelect"),
 
   objectMeta: document.getElementById("objectMeta"),
+  descriptionSection: document.getElementById("descriptionSection"),
   mediaSection: document.getElementById("mediaSection"),
   accommodationSection: document.getElementById("accommodationSection"),
   linksSection: document.getElementById("linksSection"),
@@ -181,6 +183,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
       requestUrl
     });
 
+    renderDescriptionSection(elements.descriptionSection, json);
     renderMediaSection(elements.mediaSection, json);
     renderAccommodationSection(elements.accommodationSection, json);
     renderLinksSection(elements.linksSection, json);
@@ -244,6 +247,7 @@ function applySearchFromUrl() {
 
 function clearResultSections() {
   elements.objectMeta.innerHTML = "";
+  elements.descriptionSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.mediaSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.accommodationSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.linksSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
