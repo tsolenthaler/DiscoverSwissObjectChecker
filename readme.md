@@ -21,8 +21,10 @@ Produktionsreife, statische Webapp zum Pruefen von discover.swiss Objektdaten pe
 ## Projektstruktur
 ```text
 index.html
+settings.html
 assets/styles.css
 src/main.js
+src/settings.js
 src/modules/constants.js
 src/modules/configStore.js
 src/modules/utils.js
@@ -56,6 +58,10 @@ Dann `http://localhost:8080` aufrufen.
 - Den Subscription Key gemaess discover.swiss Doku in der jeweiligen Konfiguration eintragen.
 - Header wird bei jeder Abfrage automatisch gesetzt als `Ocp-Apim-Subscription-Key`.
 - Ohne API-Key wird kein Request ausgefuehrt.
+
+## Seitenaufteilung
+- `index.html`: Auswahl "Gespeicherte Konfigurationen" und Objekt-Suche inkl. Ergebnisansicht
+- `settings.html`: Vollstaendige Konfigurationsverwaltung (CRUD, Import, Export)
 
 ## API-Konfiguration pflegen
 - Base-URLs und Default-Config: `src/modules/constants.js`
