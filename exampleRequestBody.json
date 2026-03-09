@@ -1,0 +1,947 @@
+{
+    "checkinTime": "15:00:00",
+    "checkoutTime": "11:00:00",
+    "numberOfRooms": [
+        {
+            "propertyId": "total",
+            "unitCode": "count",
+            "value": "113",
+            "name": "Zimmer insgesamt"
+        }
+    ],
+    "petsAllowed": true,
+    "openingDays": "Monday,Saturday",
+    "paymentAccepted": "Cash,Credit Card,Twint",
+    "accommodation": [
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_jaatrjvi-rvdj-eubj-rvdb-uvqaavfsdvuq",
+            "identifier": "acc_s9t_jaatrjvi-rvdj-eubj-rvdb-uvqaavfsdvuq",
+            "type": "schema.org/Accommodation",
+            "additionalType": "MeetingRoom",
+            "name": "Seesteg Sitzungszimmer"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_qqtgcebq-taue-efti-rsss-ijdqbdidhrbc",
+            "identifier": "acc_s9t_qqtgcebq-taue-efti-rsss-ijdqbdidhrbc",
+            "type": "schema.org/Accommodation",
+            "additionalType": "MeetingRoom",
+            "name": "Bergblick Sitzungszimmer"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_huadtqba-vqic-eqfa-rvvr-ctfeqfteeaie",
+            "identifier": "acc_s9t_huadtqba-vqic-eqfa-rvvr-ctfeqfteeaie",
+            "type": "schema.org/Accommodation",
+            "additionalType": "MeetingRoom",
+            "name": "Turm Sitzungszimmer"
+        }
+    ],
+    "address": {
+        "givenName": "Hans",
+        "familyName": "Muster",
+        "salutation": "mr",
+        "addressCountry": "CH",
+        "addressLocality": "St.Gallen ",
+        "addressRegion": "MUSTER",
+        "postalCode": "9000",
+        "streetAddress": "Musterstrasse",
+        "email": "info@hotelweistein.tld",
+        "telephone": "+41 71 333 66 99"
+    },
+    "geo": {
+        "latitude": 47.4214519,
+        "longitude": 9.3754457
+    },
+    "maximumAttendeeCapacity": 1000,
+    "openingHoursSpecification": [
+        {
+            "opens": "12:00:00",
+            "dayOfWeek": "Monday",
+            "closes": "22:00:00"
+        },
+        {
+            "opens": "09:00:00",
+            "dayOfWeek": "Tuesday",
+            "closes": "23:00:00"
+        },
+        {
+            "opens": "09:00:00",
+            "dayOfWeek": "Wednesday",
+            "closes": "23:00:00"
+        },
+        {
+            "opens": "09:00:00",
+            "dayOfWeek": "Thursday",
+            "closes": "23:00:00"
+        },
+        {
+            "opens": "08:00:00",
+            "dayOfWeek": "Friday",
+            "closes": "23:00:00"
+        },
+        {
+            "opens": "10:00:00",
+            "dayOfWeek": "Saturday",
+            "closes": "13:00:00"
+        },
+        {
+            "opens": "17:00:00",
+            "dayOfWeek": "Saturday",
+            "closes": "21:30:00"
+        }
+    ],
+    "photo": [
+        {
+            "tagToQuery": [
+                "image-saisonality-summer"
+            ],
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/ecd7244a99e452b89510710d8c91c989e4d69422_9734161971_4156997bc6_o.jpg",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "encodingFormat": "image/jpeg",
+            "height": "2886",
+            "width": "5130",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject",
+                        "additionalType": "Logo",
+                        "name": "contentdesk.io by TSO AG (tso-ctd_logo)"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+            "identifier": "img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+            "type": "schema.org/ImageObject",
+            "name": "TEST Ferienwohnung (ctd_ae31d25f-f4de-4f96-bc16-cf5fba72c205_img03)"
+        },
+        {
+            "tagToQuery": [
+                "image-saisonality-winter"
+            ],
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/94b79d303d5ff8ee80f33ec2f441029fc53ecb7d_43097227700_a8c9108d9a_o.jpg",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "encodingFormat": "image/jpeg",
+            "height": "2369",
+            "width": "3540",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject",
+                        "additionalType": "Logo",
+                        "name": "contentdesk.io by TSO AG (tso-ctd_logo)"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ardqsthf-bdih-eatu-itqt-jtusjscetscf",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ardqsthf-bdih-eatu-itqt-jtusjscetscf",
+            "identifier": "img_s9t_ardqsthf-bdih-eatu-itqt-jtusjscetscf",
+            "type": "schema.org/ImageObject",
+            "name": "Hotel Zweistein (ctd_0d0e2018-6889-48a8-b1bd-050b72f0665d_winter)"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/e625041a16785c7931c723aef52474a476438450_e973110d8feeaafe92ab5f785630d3f74ae7c67c_hotel_schweiz_sommer_pedalos.jpg",
+            "caption": "Galerie-Bild 01 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wab",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wab",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wab",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 01 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/e5571459a44173806b29acd25e13385ee21fdf4a_f21815d4204d187ab9b659d8bf504812b246e8bf_einfaches_schweizer_bb_zimmer_winter.jpg",
+            "caption": "Galerie-Bild 02 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wac",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wac",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wac",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 02 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/6ad66765db20a6a503fa8bd429ddfae8fe923103_458651dc9d4eef7d001a27842cd7d18810ec7f16_hotel_zweistein_005.jpg",
+            "caption": "Galerie-Bild 03 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wad",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wad",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wad",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 03 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/7a84d2ad06aa6f219ad7be4d2a04e21a27a59cd9_545883b7047702197388c2efd7d85c9d11c17bca_hotel_zweistein_007.jpg",
+            "caption": "Galerie-Bild 04 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wae",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wae",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wae",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 04 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/9feddde1c3059ead1b40082a70042a2d6c456aa6_bd93ce2016335f29eba8a65355297f57a6a92000_hotel_zweistein_008.jpg",
+            "caption": "Galerie-Bild 05 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waf",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waf",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waf",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 05 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/bf6d1eb20ee76dee8b3ec4688bb3eafceadaa612_a7949444d50ef32aecc63f46aaaaff3325e9071e_hotel_zweistein_009.jpg",
+            "caption": "Galerie-Bild 06 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wag",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wag",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wag",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 06 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/b4d2f99fdaf036d5330db1333886f8d7926f6788_standard7.webp",
+            "caption": "Galerie-Bild 07 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wah",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wah",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wah",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 07 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/9f07863f69303f280dea7766cf7baa186a0daf85_standard8.webp",
+            "caption": "Galerie-Bild 08 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wai",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wai",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wai",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 08 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/c712846002cb177f5a5923337ccabb65522b4a5b_standard9.webp",
+            "caption": "Galerie-Bild 09 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waj",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waj",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2waj",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 09 Beschreibung"
+        },
+        {
+            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/2509de88d793bfe2d44e83b8d7b784990e101fc4_standard10.webp",
+            "caption": "Galerie-Bild 10 Beschreibung",
+            "copyrightNotice": "DEV discover.swiss product supplier",
+            "dataGovernance": {
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                }
+            },
+            "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wba",
+            "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wba",
+            "identifier": "img_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft_y2wba",
+            "type": "schema.org/ImageObject",
+            "name": "Galerie-Bild 10 Beschreibung"
+        }
+    ],
+    "telephone": "+41 71 333 66 99",
+    "copyrightNotice": "TSO AG",
+    "copyright": "TSO AG",
+    "publicTransport": "Haltestelle Zweistein",
+    "parking": "In der Tiefgarage",
+    "osm_id": "node/445628383",
+    "openingHours": "Nationalfeiertag<br>Am 1. August wird der Gastronomiebereich aufgrund eines Feiertages nicht geöffnet sein.<br>Betriebsferien<br>Vom 01. November bis 30. November ist der Betrieb geschlossen.",
+    "category": [
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_010112",
+            "identifier": "sui_010112",
+            "type": "schema.org/Category",
+            "name": "Wandern"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_0101",
+            "identifier": "sui_0101",
+            "type": "schema.org/Category",
+            "name": "Zu Fuss"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_01",
+            "identifier": "sui_01",
+            "type": "schema.org/Category",
+            "name": "Aktivitäten"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_root",
+            "identifier": "sui_root",
+            "type": "schema.org/Category",
+            "name": "Themen-SUI"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_010201",
+            "identifier": "sui_010201",
+            "type": "schema.org/Category",
+            "name": "E-Bike"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_0102",
+            "identifier": "sui_0102",
+            "type": "schema.org/Category",
+            "name": "Velofahren"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_010709",
+            "identifier": "sui_010709",
+            "type": "schema.org/Category",
+            "name": "Wellness"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_0107",
+            "identifier": "sui_0107",
+            "type": "schema.org/Category",
+            "name": "Fitness"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_010907",
+            "identifier": "sui_010907",
+            "type": "schema.org/Category",
+            "name": "Schwimmen"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/categories/sui_0109",
+            "identifier": "sui_0109",
+            "type": "schema.org/Category",
+            "name": "Wassersport"
+        }
+    ],
+    "containedInPlace": [
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/osm_1683941",
+            "identifier": "osm_1683941",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "City",
+            "name": "St. Gallen"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/osm_1687006",
+            "identifier": "osm_1687006",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "State",
+            "name": "Sankt Gallen"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/osm_1687161",
+            "identifier": "osm_1687161",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "District",
+            "name": "Wahlkreis St. Gallen"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/osm_51701",
+            "identifier": "osm_51701",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "Country",
+            "name": "Schweiz"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/plz_9000_0",
+            "identifier": "plz_9000_0",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "PostalArea",
+            "name": "St. Gallen"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/areas/ds_sanktgallen",
+            "identifier": "ds_sanktgallen",
+            "type": "schema.org/AdministrativeArea",
+            "additionalType": "TourismArea",
+            "name": "St.Gallen-Bodensee"
+        }
+    ],
+    "tag": [
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/life-excursions",
+            "identifier": "life-excursions",
+            "type": "schema.org/Tag",
+            "additionalType": "life",
+            "name": "Ausflugsziele"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-year-round",
+            "identifier": "seasonality-year-round",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Ganzjährig"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-autumn",
+            "identifier": "seasonality-autumn",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Herbst"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-spring",
+            "identifier": "seasonality-spring",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Frühling"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-summer",
+            "identifier": "seasonality-summer",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Sommer"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-winter",
+            "identifier": "seasonality-winter",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Winter"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-summer-only",
+            "identifier": "seasonality-summer-only",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Sommersaison"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/seasonality-winter-only",
+            "identifier": "seasonality-winter-only",
+            "type": "schema.org/Tag",
+            "additionalType": "seasonality",
+            "name": "Wintersaison"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/vgl_home-3",
+            "identifier": "vgl_home-3",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Lauschige Cafés"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/vgl_home-2",
+            "identifier": "vgl_home-2",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Frühlingsgefühle"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/tso_test-projekt-tso-ost",
+            "identifier": "tso_test-projekt-tso-ost",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Test Projekt TSO OST"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/tso_test2-tso",
+            "identifier": "tso_test2-tso",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "test2_tso"
+        }
+    ],
+    "campaignTag": [
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/vgl_home-3",
+            "identifier": "vgl_home-3",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Lauschige Cafés"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/vgl_home-2",
+            "identifier": "vgl_home-2",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Frühlingsgefühle"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/tso_test-projekt-tso-ost",
+            "identifier": "tso_test-projekt-tso-ost",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "Test Projekt TSO OST"
+        },
+        {
+            "@id": "https://api.discover.swiss/test/info/v2/tags/tso_test2-tso",
+            "identifier": "tso_test2-tso",
+            "type": "schema.org/Tag",
+            "additionalType": "campaign",
+            "name": "test2_tso"
+        }
+    ],
+    "award": [
+        {
+            "award": {
+                "logo": {
+                    "contentUrl": "https://cdn.discover.swiss/img/biobud.svg",
+                    "dataGovernance": {
+                        "provider": {
+                            "acronym": "bios",
+                            "logo": {
+                                "contentUrl": "https://cdn.discover.swiss/logos/bios.svg",
+                                "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_ry48_14w4",
+                                "identifier": "img_ry48_14w4",
+                                "type": "schema.org/ImageObject"
+                            },
+                            "identifier": "bios",
+                            "type": "schema.org/Partner",
+                            "name": "Bio Suisse"
+                        },
+                        "source": {
+                            "acronym": "bios",
+                            "logo": {
+                                "contentUrl": "https://cdn.discover.swiss/logos/bios.svg",
+                                "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_ry48_14w4",
+                                "identifier": "img_ry48_14w4",
+                                "type": "schema.org/ImageObject"
+                            },
+                            "identifier": "bios",
+                            "type": "schema.org/Partner",
+                            "name": "Bio Suisse"
+                        }
+                    },
+                    "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_ry4rkt-14w4",
+                    "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_ry4rkt-14w4",
+                    "identifier": "img_ry4rkt-14w4",
+                    "type": "schema.org/ImageObject",
+                    "additionalType": "Logo",
+                    "name": "Bio Knospe (biobud-logo)"
+                },
+                "@id": "https://api.discover.swiss/test/info/v2/awards/biobud",
+                "identifier": "biobud",
+                "type": "schema.org/Award",
+                "name": "Bio Knospe"
+            }
+        }
+    ],
+    "amenityFeature": [
+        {
+            "value": "true",
+            "propertyId": "security-travelifesustainabilitycertification",
+            "valueType": "boolean",
+            "typeName": "Sicherheit und Schutz",
+            "additionalType": "security",
+            "name": "Nachhaltigkeitszertifizierung von Travelife"
+        }
+    ],
+    "@id": "https://api.discover.swiss/test/info/v2/lodgingbusinesses/log_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft",
+    "identifier": "log_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft",
+    "removed": false,
+    "dataGovernance": {
+        "origin": [
+            {
+                "datasource": "ctd-devsupp",
+                "sourceId": "0d0e2018-6889-48a8-b1bd-050b72f0665d",
+                "created": "2024-06-25T05:23:25+00:00",
+                "lastModified": "2025-12-17T13:30:22+00:00",
+                "license": "CC BY-SA",
+                "provider": {
+                    "acronym": "tso-ctd",
+                    "logo": {
+                        "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                        "identifier": "img_984-s9t_14w4",
+                        "type": "schema.org/ImageObject",
+                        "additionalType": "Logo",
+                        "name": "contentdesk.io by TSO AG (tso-ctd_logo)"
+                    },
+                    "identifier": "tso-ctd",
+                    "type": "schema.org/Partner",
+                    "name": "contentdesk.io by TSO AG"
+                },
+                "source": {
+                    "acronym": "devsupp",
+                    "identifier": "devsupp",
+                    "type": "schema.org/Partner",
+                    "name": "DEV discover.swiss product supplier"
+                },
+                "author": {
+                    "familyName": "TSO AG"
+                }
+            }
+        ],
+        "provider": {
+            "acronym": "tso-ctd",
+            "logo": {
+                "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                "identifier": "img_984-s9t_14w4",
+                "type": "schema.org/ImageObject",
+                "additionalType": "Logo",
+                "name": "contentdesk.io by TSO AG (tso-ctd_logo)"
+            },
+            "identifier": "tso-ctd",
+            "type": "schema.org/Partner",
+            "name": "contentdesk.io by TSO AG"
+        },
+        "source": {
+            "acronym": "devsupp",
+            "identifier": "devsupp",
+            "type": "schema.org/Partner",
+            "name": "DEV discover.swiss product supplier"
+        },
+        "author": {
+            "familyName": "TSO AG"
+        }
+    },
+    "additionalProperty": [
+        {
+            "value": "370-331",
+            "propertyId": "avs_object_id",
+            "valueType": "string",
+            "audience": [
+                "externalId"
+            ]
+        }
+    ],
+    "lastModified": "2026-01-16T02:17:56.8818316+00:00",
+    "availableDataLanguage": [
+        "de",
+        "en",
+        "fr",
+        "it"
+    ],
+    "autoTranslatedData": false,
+    "license": "CC BY-SA",
+    "view": [
+        "tso-c837649",
+        "tso-20e9c64",
+        "tso-4d0198f",
+        "tso-1086d35",
+        "tso-3d734d7",
+        "tso-8def348",
+        "tso-18d37c9",
+        "tso-9f6cb78",
+        "tso-6ea2fdb",
+        "tso-226f76b",
+        "tso-234666d",
+        "tso-7b1a278",
+        "tso-455ae2d",
+        "tso-8ae4c23",
+        "tso-cc6aed2",
+        "tso-0788979",
+        "tso-1e472b3",
+        "tso-d26eae8",
+        "tso-ad57366",
+        "tso-5d85be4",
+        "tso-88b5456",
+        "tso-16dc368",
+        "tso-a4e00d7"
+    ],
+    "description": "<p>Inmitten <em>der Altstadt</em> und dennoch ruhig gelegen. Kulinarische Erlebnisse in zwei unterschiedlichen Restaurants: Das Zweistein Gourmet Restaurant f&uuml;r besonderen Genuss ausgezeichnet mit 18 GaultMillau Punkten und 2 Michelin Sternen, das Bistro St. Gallen mit leichter regionaler K&uuml;che. Zweistein Bar mit einer Davidoff Cigar Lounge mit monatlichen Events. Fitnesspark Zweistein mit Spa-Bereich. Kongresszentrum und Parkhaus.</p><h4>Typisches Schweizer Hotel</h4><p>Die grosse textile Vergangenheit hinterliess architektonische Spuren: Das Zweistein ist ein klassizistisches, f&uuml;nfst&ouml;ckiges Geb&auml;ude aus dem Jahr 1830. Es ist mit edlen Stoffen renommierter St. Galler Stoffproduzenten eingerichtet. Spitzenrestaurants mit Wein und Bier aus der Region. UNESCO-Weltkulturerbe Kloster und Stiftbezirk in Fussdistanz; unweit von Bodensee und Appenzell.</p><h4>Seminare</h4><p>Das Zweistein Congress hat seit seiner Er&ouml;ffnung 2009 schweizweit neue Massst&auml;be gesetzt. Die 15 eleganten Meetingr&auml;ume auf f&uuml;nf Etagen, der <strong>Boardroom </strong>und der einzigartige Zweistein-Saal &uuml;berzeugen durch ausgesuchte Materialien und mit einer hellen, inspirierenden Atmosph&auml;re. Ausgestattet mit der neusten Pr&auml;sentations- und <strong>Kommunikationstechnologie </strong>kann das Zweistein Congress fast jeden Wunsch des Gastes erf&uuml;llen. Zudem ist der grossz&uuml;gige Zweistein-Saal die ideale Lokalit&auml;t f&uuml;r gelungene <em>Bankette</em>, <em>Hochzeiten</em>, <em>Konzerte </em>oder <em>Events</em>. Die hauseigene Parkgarage ist mit dem Zweistein <strong>Congress</strong> direkt verbunden.</p><ul><li>Typisches Schweizer Hotel</li><li>Seminare</li></ul><ol><li>Zweistein Congress</li><li>textile Vergangenheit</li></ol><p>&nbsp;</p>",
+    "disambiguatingDescription": "Das Zweistein St.Gallen, das von den Gästen als erstes Haus am Platz bewertete Hotel, bietet 113 elegante Zimmer und Suiten, ausgestattet mit edelsten Materialien wie Marmor, Kirschbaum und St. Galler Textilien.",
+    "image": {
+        "tagToQuery": [
+            "image-saisonality-summer"
+        ],
+        "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/ecd7244a99e452b89510710d8c91c989e4d69422_9734161971_4156997bc6_o.jpg",
+        "copyrightNotice": "DEV discover.swiss product supplier",
+        "encodingFormat": "image/jpeg",
+        "height": "2886",
+        "width": "5130",
+        "dataGovernance": {
+            "provider": {
+                "acronym": "tso-ctd",
+                "logo": {
+                    "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
+                    "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_984-s9t_14w4",
+                    "identifier": "img_984-s9t_14w4",
+                    "type": "schema.org/ImageObject",
+                    "additionalType": "Logo",
+                    "name": "contentdesk.io by TSO AG (tso-ctd_logo)"
+                },
+                "identifier": "tso-ctd",
+                "type": "schema.org/Partner",
+                "name": "contentdesk.io by TSO AG"
+            },
+            "source": {
+                "acronym": "devsupp",
+                "identifier": "devsupp",
+                "type": "schema.org/Partner",
+                "name": "DEV discover.swiss product supplier"
+            }
+        },
+        "thumbnailUrl": "https://media-test-v2.discover.swiss/image/img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+        "@id": "https://api.discover.swiss/test/info/v2/imageObjects/img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+        "identifier": "img_s9t_chuuhuvu-bfvr-eqav-raiq-cisrsgsvibju_y2wac",
+        "type": "schema.org/ImageObject",
+        "name": "TEST Ferienwohnung (ctd_ae31d25f-f4de-4f96-bc16-cf5fba72c205_img03)"
+    },
+    "url": "https://demo.tourismusweb.site",
+    "additionalType": "Hotel",
+    "link": [
+        {
+            "url": "https://demo.tourismusweb.site",
+            "inLanguage": "de",
+            "type": "WebBooking"
+        },
+        {
+            "url": "https://demo.tourismusweb.site",
+            "type": "WebHomepage"
+        }
+    ],
+    "potentialAction": [
+        {
+            "additionalType": "ViewAction",
+            "inLanguage": "de",
+            "target": [
+                {
+                    "type": "app",
+                    "urlTemplate": "https://demo.tourismusweb.site/"
+                }
+            ],
+            "name": "Jetzt ansehen"
+        },
+        {
+            "additionalType": "ReserveAction",
+            "inLanguage": "de",
+            "target": [
+                {
+                    "type": "mice",
+                    "urlTemplate": "https://www.outdooractive.com/de/hut/glarner-alpen/ferienhaus-schnaels/38022336/"
+                },
+                {
+                    "type": "Web",
+                    "urlTemplate": "https://demo.tourismusweb.site\n"
+                }
+            ],
+            "name": "Jetzt reservieren"
+        },
+        {
+            "additionalType": "OrderAction",
+            "target": [
+                {
+                    "type": "Web",
+                    "urlTemplate": "https://demo.tourismusweb.site"
+                }
+            ]
+        }
+    ],
+    "name": "Hotel Zweistein",
+    "type": "schema.org/LodgingBusiness"
+}
