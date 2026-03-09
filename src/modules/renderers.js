@@ -291,29 +291,71 @@ export function renderAccommodationSection(container, payload) {
     return;
   }
 
-  const list = document.createElement("ul");
-  list.className = "list";
+  const table = document.createElement("table");
+  table.className = "result-table";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>Name</th><th>additionalType</th><th>Referenz</th><th>Aktion</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
 
   items.forEach((item) => {
-    const li = document.createElement("li");
-    const name = fallbackText(item?.name, "Ohne Name");
-    const ref = item?.["@id"] || item?.identifier || "keine Referenz";
+    const row = document.createElement("tr");
 
+    const nameCell = document.createElement("td");
+    const name = fallbackText(item?.name, "Ohne Name");
+    nameCell.textContent = name;
+
+    const additionalTypeCell = document.createElement("td");
+    additionalTypeCell.textContent = fallbackText(item?.additionalType, "-");
+
+    const refCell = document.createElement("td");
+    const ref = item?.["@id"] || item?.identifier || "keine Referenz";
     if (typeof ref === "string" && ref.startsWith("http")) {
-      const link = document.createElement("a");
-      link.href = ref;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = `${name} (${ref})`;
-      li.appendChild(link);
+      const refLink = document.createElement("a");
+      refLink.href = ref;
+      refLink.target = "_blank";
+      refLink.rel = "noopener noreferrer";
+      refLink.textContent = ref;
+      refCell.appendChild(refLink);
     } else {
-      li.textContent = `${name} (${ref})`;
+      refCell.textContent = String(ref);
     }
 
-    list.appendChild(li);
+    const actionCell = document.createElement("td");
+    const detailId = getLinkedObjectId(item);
+    if (detailId) {
+      const detailLink = document.createElement("a");
+      detailLink.href = `index.html?id=${encodeURIComponent(detailId)}`;
+      detailLink.textContent = "Detail abfrage";
+      actionCell.appendChild(detailLink);
+    } else {
+      actionCell.textContent = "-";
+    }
+
+    row.append(nameCell, additionalTypeCell, refCell, actionCell);
+    tbody.appendChild(row);
   });
 
-  container.appendChild(list);
+  table.appendChild(tbody);
+  container.appendChild(table);
+}
+
+function getLinkedObjectId(item) {
+  const identifier = String(safeGet(item, "identifier", "")).trim();
+  if (identifier) {
+    return identifier;
+  }
+
+  const atId = String(safeGet(item, "@id", "")).trim();
+  if (!atId) {
+    return "";
+  }
+
+  const withoutQuery = atId.split("?")[0];
+  const segments = withoutQuery.split("/").filter(Boolean);
+  return segments[segments.length - 1] || "";
 }
 
 export function renderLinksSection(container, payload) {
