@@ -67,27 +67,35 @@
         </div>
       </div>
 
-      <article class="card">
+      <div class="tabs" role="tablist" aria-label="Ergebnis Tabs">
+        <button type="button" class="tab-button active" role="tab" aria-selected="true" data-tab="meta">Objekt-Metadaten</button>
+        <button type="button" class="tab-button" role="tab" aria-selected="false" data-tab="description">Beschreibung</button>
+        <button type="button" class="tab-button" role="tab" aria-selected="false" data-tab="media">Medien</button>
+        <button type="button" class="tab-button" role="tab" aria-selected="false" data-tab="accommodation">Accommodation</button>
+        <button type="button" class="tab-button" role="tab" aria-selected="false" data-tab="links">Links</button>
+      </div>
+
+      <article class="card tab-panel active" data-panel="meta">
         <h3>Objekt-Metadaten</h3>
         <dl id="objectMeta" class="meta-grid"></dl>
       </article>
 
-      <article class="card">
+      <article class="card tab-panel" data-panel="description">
         <h3>Beschreibung</h3>
         <div id="descriptionSection"></div>
       </article>
 
-      <article class="card">
+      <article class="card tab-panel" data-panel="media">
         <h3>Medien</h3>
         <div id="mediaSection"></div>
       </article>
 
-      <article class="card">
+      <article class="card tab-panel" data-panel="accommodation">
         <h3>Accommodation</h3>
         <div id="accommodationSection"></div>
       </article>
 
-      <article class="card">
+      <article class="card tab-panel" data-panel="links">
         <h3>Links</h3>
         <div id="linksSection"></div>
       </article>

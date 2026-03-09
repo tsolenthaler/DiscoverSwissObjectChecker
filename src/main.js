@@ -31,6 +31,8 @@ const elements = {
   fetchButton: document.getElementById("fetchButton"),
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
+  tabButtons: Array.from(document.querySelectorAll(".tab-button")),
+  tabPanels: Array.from(document.querySelectorAll(".tab-panel")),
 
   objectMeta: document.getElementById("objectMeta"),
   descriptionSection: document.getElementById("descriptionSection"),
@@ -50,6 +52,7 @@ function init() {
   fillEndpointOverride();
   ensureDefaultConfig();
   bindEvents();
+  initializeTabs();
   reloadConfigSelect();
   clearResultSections();
   renderStatus(elements.status, "Bereit", "info");
@@ -101,6 +104,28 @@ function bindEvents() {
     } catch {
       renderStatus(elements.status, "Kopieren fehlgeschlagen. Browser-Berechtigung pruefen.", "warn");
     }
+  });
+
+  elements.tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      activateTab(button.dataset.tab);
+    });
+  });
+}
+
+function initializeTabs() {
+  activateTab("meta");
+}
+
+function activateTab(tabName) {
+  elements.tabButtons.forEach((button) => {
+    const active = button.dataset.tab === tabName;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+  });
+
+  elements.tabPanels.forEach((panel) => {
+    panel.classList.toggle("active", panel.dataset.panel === tabName);
   });
 }
 

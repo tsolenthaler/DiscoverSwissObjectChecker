@@ -203,6 +203,32 @@ hr {
   background: white;
 }
 
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tab-button {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.tab-button.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
 .card h3,
 .card h4,
 .card h5 {
