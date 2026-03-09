@@ -13,9 +13,10 @@ export function renderStatus(statusEl, message, type = "info") {
 }
 
 export function renderObjectMeta(container, context) {
-  const { endpoint, id, requestUrl, source, objectAtId } = context;
+  const { endpoint, id, name, requestUrl, source, objectAtId } = context;
   const sameAsAtId = compareUrls(requestUrl, objectAtId);
   const rows = [
+    ["Name", fallbackText(name, "nicht vorhanden")],
     ["Endpoint", endpoint],
     ["Objekt-ID", id],
     ["Erkannt via", source],

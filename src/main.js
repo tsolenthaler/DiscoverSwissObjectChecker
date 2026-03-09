@@ -204,6 +204,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
     renderObjectMeta(elements.objectMeta, {
       endpoint: parsed.endpoint,
       id: parsed.id,
+      name: json?.name || "",
       source: parsed.source,
       requestUrl,
       objectAtId: json?.["@id"] || ""
