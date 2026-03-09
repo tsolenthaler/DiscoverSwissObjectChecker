@@ -177,7 +177,16 @@ function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
     ? `tagToQuery: ${tags.join(", ")}`
     : "tagToQuery: nicht vorhanden";
 
+  const format = fallbackText(safeGet(media, "encodingFormat", ""), "nicht vorhanden");
+  const width = fallbackText(safeGet(media, "width", ""), "nicht vorhanden");
+  const height = fallbackText(safeGet(media, "height", ""), "nicht vorhanden");
+
+  const detailsEl = document.createElement("p");
+  detailsEl.className = "tag-line";
+  detailsEl.innerHTML = `encodingFormat: ${format} <br/> width: ${width} <br/> height: ${height}`;
+
   card.appendChild(tagsEl);
+  card.appendChild(detailsEl);
   return card;
 }
 
