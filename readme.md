@@ -61,6 +61,10 @@ Dann `http://localhost:8080` aufrufen.
 - Header wird bei jeder Abfrage automatisch gesetzt als `Ocp-Apim-Subscription-Key`.
 - Ohne API-Key wird kein Request ausgefuehrt.
 
+## Sprache
+- Sprache wird aus der aktiven Konfiguration uebernommen.
+- Wird als Header `Accept-Language` bei jedem Request mitgegeben (wenn gesetzt).
+
 ## Seitenaufteilung
 - `index.html`: Auswahl "Gespeicherte Konfigurationen" und Objekt-Suche inkl. Ergebnisansicht
 - `settings.html`: Vollstaendige Konfigurationsverwaltung (CRUD, Import, Export)

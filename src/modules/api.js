@@ -13,9 +13,6 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
   if (config.project) {
     url.searchParams.set("project", config.project);
   }
-  if (config.language) {
-    url.searchParams.set("language", config.language);
-  }
   if (scope) {
     url.searchParams.set("scope", scope);
   }
@@ -25,6 +22,7 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
 
 export async function fetchObjectById(config, endpoint, objectId, options = {}) {
   const apiKey = String(config?.apiKey || "").trim();
+  const language = String(config?.language || "").trim();
   const scope = String(options?.scope || "").trim();
   if (!apiKey) {
     throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
@@ -39,6 +37,10 @@ export async function fetchObjectById(config, endpoint, objectId, options = {}) 
       Accept: "application/json",
       "Ocp-Apim-Subscription-Key": apiKey
     };
+
+    if (language) {
+      headers["Accept-Language"] = language;
+    }
 
     if (scope) {
       headers.scope = scope;
