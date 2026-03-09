@@ -200,6 +200,17 @@ function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
     card.appendChild(missingId);
   }
 
+  const mediaServiceUrl = getMediaServiceUrl(media);
+  if (mediaServiceUrl) {
+    const mediaServiceLink = document.createElement("a");
+    mediaServiceLink.href = mediaServiceUrl;
+    mediaServiceLink.target = "_blank";
+    mediaServiceLink.rel = "noopener noreferrer";
+    mediaServiceLink.textContent = "Media Service (6400x6400)";
+    mediaServiceLink.style.display = "block";
+    card.appendChild(mediaServiceLink);
+  }
+
   card.appendChild(tagsEl);
   card.appendChild(detailsEl);
   return card;
@@ -219,6 +230,54 @@ function getMediaLookupId(media) {
   const withoutQuery = atId.split("?")[0];
   const segments = withoutQuery.split("/").filter(Boolean);
   return segments[segments.length - 1] || "";
+}
+
+function getMediaServiceUrl(media) {
+  const fromThumbnail = buildMediaServiceUrlFromThumbnail(media);
+  if (fromThumbnail) {
+    return fromThumbnail;
+  }
+
+  const mediaId = getMediaLookupId(media);
+  if (!mediaId) {
+    return "";
+  }
+
+  const atId = String(safeGet(media, "@id", "")).trim().toLowerCase();
+  const mediaOrigin = atId.includes("/test/")
+    ? "https://media-test-v2.discover.swiss"
+    : "https://media-v2.discover.swiss";
+
+  const url = new URL(`${mediaOrigin}/image/${mediaId}`);
+  url.searchParams.set("height", "6400");
+  url.searchParams.set("width", "6400");
+  return url.toString();
+}
+
+function buildMediaServiceUrlFromThumbnail(media) {
+  const thumbnailUrl = String(safeGet(media, "thumbnailUrl", "")).trim();
+  if (!thumbnailUrl) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(thumbnailUrl);
+    const segments = parsed.pathname.split("/").filter(Boolean);
+    const imageSegmentIndex = segments.findIndex((segment) => segment === "image");
+    const mediaToken =
+      imageSegmentIndex >= 0 ? segments[imageSegmentIndex + 1] : segments[segments.length - 1];
+
+    if (!mediaToken) {
+      return "";
+    }
+
+    const url = new URL(`${parsed.origin}/image/${mediaToken}`);
+    url.searchParams.set("height", "6400");
+    url.searchParams.set("width", "6400");
+    return url.toString();
+  } catch {
+    return "";
+  }
 }
 
 export function renderAccommodationSection(container, payload) {
