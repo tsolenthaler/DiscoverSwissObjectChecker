@@ -251,6 +251,7 @@ function getMediaServiceUrl(media) {
   const url = new URL(`${mediaOrigin}/image/${mediaId}`);
   url.searchParams.set("height", "6400");
   url.searchParams.set("width", "6400");
+  url.searchParams.set("extension", "webp");
   return url.toString();
 }
 
@@ -274,6 +275,7 @@ function buildMediaServiceUrlFromThumbnail(media) {
     const url = new URL(`${parsed.origin}/image/${mediaToken}`);
     url.searchParams.set("height", "6400");
     url.searchParams.set("width", "6400");
+    url.searchParams.set("extension", "webp");
     return url.toString();
   } catch {
     return "";
