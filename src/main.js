@@ -28,6 +28,7 @@ const elements = {
   objectInput: document.getElementById("objectInput"),
   endpointOverride: document.getElementById("endpointOverride"),
   scopeInput: document.getElementById("scopeInput"),
+  languageInput: document.getElementById("languageInput"),
   fetchButton: document.getElementById("fetchButton"),
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
@@ -53,7 +54,7 @@ function init() {
   ensureDefaultConfig();
   bindEvents();
   initializeTabs();
-  reloadConfigSelect();
+  reloadConfigSelect(true);
   clearResultSections();
   renderStatus(elements.status, "Bereit", "info");
   applySearchFromUrl();
@@ -82,6 +83,7 @@ function bindEvents() {
     }
     setActiveConfigId(selectedId);
     state.activeConfigId = selectedId;
+    applyLanguageFromActiveConfig(true);
     renderStatus(elements.status, "Aktive Konfiguration gewechselt.", "success");
   });
 
@@ -138,7 +140,7 @@ function fillEndpointOverride() {
   });
 }
 
-function reloadConfigSelect() {
+function reloadConfigSelect(forceLanguageSync = false) {
   const configs = getAllConfigs();
   elements.configSelect.innerHTML = "";
 
@@ -157,7 +159,22 @@ function reloadConfigSelect() {
     elements.configSelect.value = validActive;
     state.activeConfigId = validActive;
     setActiveConfigId(validActive);
+    applyLanguageFromActiveConfig(forceLanguageSync);
   }
+}
+
+function applyLanguageFromActiveConfig(force = false) {
+  const activeConfig = getConfigById(state.activeConfigId);
+  if (!activeConfig) {
+    return;
+  }
+
+  const currentLanguageValue = String(elements.languageInput.value || "").trim();
+  if (!force && currentLanguageValue) {
+    return;
+  }
+
+  elements.languageInput.value = String(activeConfig.language || "").trim();
 }
 
 async function handleSearchSubmit(event) {
@@ -166,11 +183,12 @@ async function handleSearchSubmit(event) {
   await executeSearch(
     elements.objectInput.value,
     elements.endpointOverride.value,
-    elements.scopeInput.value
+    elements.scopeInput.value,
+    elements.languageInput.value
   );
 }
 
-async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
+async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", languageInput = "") {
 
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
@@ -187,7 +205,8 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
   }
 
   const normalizedScope = String(scopeInput || "").trim();
-  syncSearchParams(parsed.id, endpointOverride || "", normalizedScope);
+  const normalizedLanguage = String(languageInput || "").trim();
+  syncSearchParams(parsed.id, endpointOverride || "", normalizedScope, normalizedLanguage);
 
   elements.fetchButton.disabled = true;
   renderStatus(elements.status, "Lade Daten...", "info");
@@ -197,7 +216,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
       activeConfig,
       parsed.endpoint,
       parsed.id,
-      { scope: normalizedScope }
+      { scope: normalizedScope, language: normalizedLanguage }
     );
     state.lastPayload = json;
 
@@ -219,7 +238,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
     elements.copyJsonButton.disabled = false;
 
     markConfigAsUsed(activeConfig.id);
-    reloadConfigSelect();
+    reloadConfigSelect(false);
 
     renderStatus(elements.status, "Daten erfolgreich geladen.", "success");
   } catch (error) {
@@ -230,7 +249,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
   }
 }
 
-function syncSearchParams(id, endpointOverride, scope) {
+function syncSearchParams(id, endpointOverride, scope, language) {
   const url = new URL(window.location.href);
   url.searchParams.set("id", id);
 
@@ -246,6 +265,12 @@ function syncSearchParams(id, endpointOverride, scope) {
     url.searchParams.delete("scope");
   }
 
+  if (language) {
+    url.searchParams.set("language", language);
+  } else {
+    url.searchParams.delete("language");
+  }
+
   window.history.replaceState({}, "", url);
 }
 
@@ -254,6 +279,7 @@ function applySearchFromUrl() {
   const queryId = params.get("id");
   const queryEndpoint = params.get("endpoint");
   const queryScope = params.get("scope");
+  const queryLanguage = params.get("language");
 
   if (!queryId) {
     return;
@@ -269,7 +295,16 @@ function applySearchFromUrl() {
     elements.scopeInput.value = queryScope;
   }
 
-  void executeSearch(queryId, elements.endpointOverride.value, elements.scopeInput.value);
+  if (queryLanguage !== null) {
+    elements.languageInput.value = queryLanguage;
+  }
+
+  void executeSearch(
+    queryId,
+    elements.endpointOverride.value,
+    elements.scopeInput.value,
+    elements.languageInput.value
+  );
 }
 
 function clearResultSections() {

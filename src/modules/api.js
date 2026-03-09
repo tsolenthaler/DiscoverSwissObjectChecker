@@ -22,7 +22,7 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
 
 export async function fetchObjectById(config, endpoint, objectId, options = {}) {
   const apiKey = String(config?.apiKey || "").trim();
-  const language = String(config?.language || "").trim();
+  const language = String(options?.language ?? config?.language ?? "").trim();
   const scope = String(options?.scope || "").trim();
   if (!apiKey) {
     throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
