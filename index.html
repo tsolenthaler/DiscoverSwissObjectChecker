@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiscoverSwissCheckData</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-a" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-b" aria-hidden="true"></div>
+
+  <header class="page-header">
+    <h1>DiscoverSwissCheckData</h1>
+    <p>Objektdaten aus der discover.swiss Info API schnell pruefen und vergleichen.</p>
+  </header>
+
+  <main class="layout" aria-label="Discover Swiss Objektpruefung">
+    <section class="panel controls" aria-label="Suche und Konfiguration">
+      <h2>Suche</h2>
+      <form id="searchForm" class="stack" novalidate>
+        <label for="objectInput">Objekt-ID oder Pfad</label>
+        <input
+          id="objectInput"
+          name="objectInput"
+          type="text"
+          placeholder="z. B. log_s9t_... oder /lodgingbusinesses/log_s9t_..."
+          required
+          aria-required="true"
+        >
+
+        <label for="endpointOverride">Endpoint (optional, bei unklarer ID)</label>
+        <select id="endpointOverride" name="endpointOverride" aria-label="Endpoint manuell waehlen">
+          <option value="">Automatisch erkennen</option>
+        </select>
+
+        <button type="submit" id="fetchButton">Daten abrufen</button>
+      </form>
+
+      <div id="status" class="status" role="status" aria-live="polite">Bereit</div>
+
+      <hr>
+
+      <h2>Konfigurationen</h2>
+      <form id="configForm" class="stack" novalidate>
+        <label for="configName">Name</label>
+        <input id="configName" name="configName" type="text" placeholder="Meine TEST Konfiguration" required>
+
+        <label for="configEnv">Umgebung</label>
+        <select id="configEnv" name="configEnv">
+          <option value="test">TEST</option>
+          <option value="prod">PROD</option>
+        </select>
+
+        <label for="configBaseUrl">Base URL</label>
+        <input id="configBaseUrl" name="configBaseUrl" type="url" required>
+
+        <label for="configProject">Project Parameter</label>
+        <input id="configProject" name="configProject" type="text" value="tso-test" required>
+
+        <label for="configLanguage">Standard-Sprache (optional)</label>
+        <input id="configLanguage" name="configLanguage" type="text" placeholder="de / en / fr">
+
+        <div class="button-row">
+          <button type="button" id="newConfigButton" class="ghost">Neu</button>
+          <button type="button" id="saveConfigButton">Speichern</button>
+          <button type="button" id="deleteConfigButton" class="ghost">Loeschen</button>
+          <button type="button" id="loadConfigButton" class="ghost">Laden</button>
+        </div>
+      </form>
+
+      <div class="stack compact">
+        <label for="configSelect">Gespeicherte Konfigurationen</label>
+        <select id="configSelect" aria-label="Gespeicherte Konfigurationen"></select>
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="exportConfigButton" class="ghost">Exportieren</button>
+        <button type="button" id="importConfigButton" class="ghost">Importieren</button>
+        <input type="file" id="importConfigInput" accept="application/json" hidden>
+      </div>
+    </section>
+
+    <section class="panel results" aria-label="Ergebnisbereich">
+      <div class="result-head">
+        <h2>Ergebnis</h2>
+        <div class="button-row">
+          <button type="button" id="openJsonButton" class="ghost" disabled>JSON im Popup oeffnen</button>
+          <button type="button" id="copyJsonButton" class="ghost" disabled>JSON in Zwischenablage kopieren</button>
+        </div>
+      </div>
+
+      <article class="card">
+        <h3>Objekt-Metadaten</h3>
+        <dl id="objectMeta" class="meta-grid"></dl>
+      </article>
+
+      <article class="card">
+        <h3>Medien</h3>
+        <div id="mediaSection"></div>
+      </article>
+
+      <article class="card">
+        <h3>Accommodation</h3>
+        <div id="accommodationSection"></div>
+      </article>
+
+      <article class="card">
+        <h3>Links</h3>
+        <div id="linksSection"></div>
+      </article>
+    </section>
+  </main>
+
+  <dialog id="jsonDialog" aria-label="JSON Daten im Popup">
+    <form method="dialog" class="dialog-header">
+      <h3>JSON Ausgabe</h3>
+      <button>Schliessen</button>
+    </form>
+    <pre id="jsonOutput"></pre>
+  </dialog>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

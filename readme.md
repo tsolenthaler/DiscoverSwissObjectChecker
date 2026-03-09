@@ -1,262 +1,70 @@
-Erstell mir eine Webseite mit dem Namen "DiscoverSwissCheckData", welches alle Informationen eins Objekt bei discover.swiss abfragt.
-## Funktionen
-* Konfiguration erstellen, bearbeiten, löschen, laden sowie importieren und exportieren mit Produktion und Test wie beim https://tsolenthaler.github.io/AiDiscoverSwissViewManager/index.html
-* Eingabe der ID eines Objekt bspw. civ_s9t_aaeiccsu-bqdq-eagu-jfij-qiqacbfiqaib
-* Detail-Seite mit Übersicht von folgenden Funktionen
-	* Abschnitt Medien mit Übersicht der gelieferten Medien vom Property "image" (Hauptbild) und Galerie von "photo" mit Bild von "thumbnailUrl" und link zu Orginal-Bild "contentUrl". Zusätlich sollen das Property "tagToQuery" pro Medium angezeigt werden. 
-	* Abschnitt "Accommodation" mit Auflisten der Links vom Property "accommodation" mit Name
-	* Abschnitt "Links" mit Auflsiten der Links vom Property "link" 
-	* JSON im Popup öffnen und in zwischen Ablage speichern.
-* Github Pages
-* Webapp
-
-## Beispiele
-
-### Ids
-welche eingegeben werden könne:
-civ_s9t_aaeiccsu-bqdq-eagu-jfij-qiqacbfiqaib
-log_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft
-oder
-/lodgingbusinesses/log_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft
-/civicStructures/civ_s9t_aaeiccsu-bqdq-eagu-jfij-qiqacbfiqaib
-### Beispiel Abfrage:
-PROD-Endpoint
-https://api.discover.swiss/info/v2/accommodations/acc_s9t_tgcrjtfq-cbbt-efaa-qfgc-vutdtgvbqafa?project=tso-test
-TEST-Endpoint
-https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_tgcrjtfq-cbbt-efaa-qfgc-vutdtgvbqafa?project=tso-test
-
-Endpoints die Abfragt werden können:
-* https://api.discover.swiss/test/info/v2/accommodations/{id}
-* https://api.discover.swiss/test/info/v2/civicStructures/{id}
-* https://api.discover.swiss/test/info/v2/creativeWorks/{id}
-* https://api.discover.swiss/test/info/v2/events/{id}
-* https://api.discover.swiss/test/info/v2/foodEstablishments/{id}
-* https://api.discover.swiss/test/info/v2/imageObjects/{id}
-* https://api.discover.swiss/test/info/v2/localbusinesses/{id}
-* https://api.discover.swiss/test/info/v2/lodgingbusinesses/{id}
-* https://api.discover.swiss/test/info/v2/mediaObjects/{id}
-* https://api.discover.swiss/test/info/v2/places/{id}
-* https://api.discover.swiss/test/info/v2/products/{id}
-* https://api.discover.swiss/test/info/v2/skiresorts/{id}
-* https://api.discover.swiss/test/info/v2/tours/{id}
-* https://api.discover.swiss/test/info/v2/transportationSystems/{id}
-* https://api.discover.swiss/test/info/v2/videoObjects/{id}
-* https://api.discover.swiss/test/info/v2/webcams/{id}
-
-Details siehe Anhang Open API 3 discoverswiss-test-v2-infocenter-api.json
-### GET Methode
-https://api.discover.swiss/test/info/v2/lodgingbusinesses/log_s9t_ataucabi-giij-eiqi-rbrt-afarhcvaggft?project=tso-test
-##### Request Body
-```json
-{
-
-    "checkinTime": "15:00:00",
-
-    "checkoutTime": "11:00:00",
-
-    "numberOfRooms": [
-
-        {
-
-            "propertyId": "total",
-
-            "unitCode": "count",
-
-            "value": "113",
-
-            "name": "Zimmer insgesamt"
-
-        }
-
-    ],
-
-    "petsAllowed": true,
-
-    "openingDays": "Monday,Saturday",
-
-    "paymentAccepted": "Cash,Credit Card,Twint",
-
-    "accommodation": [
-
-        {
-
-            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_jaatrjvi-rvdj-eubj-rvdb-uvqaavfsdvuq",
-
-            "identifier": "acc_s9t_jaatrjvi-rvdj-eubj-rvdb-uvqaavfsdvuq",
-
-            "type": "schema.org/Accommodation",
-
-            "additionalType": "MeetingRoom",
-
-            "name": "Seesteg Sitzungszimmer"
-
-        },
-
-        {
-
-            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_qqtgcebq-taue-efti-rsss-ijdqbdidhrbc",
-
-            "identifier": "acc_s9t_qqtgcebq-taue-efti-rsss-ijdqbdidhrbc",
-
-            "type": "schema.org/Accommodation",
-
-            "additionalType": "MeetingRoom",
-
-            "name": "Bergblick Sitzungszimmer"
-
-        },
-
-        {
-
-            "@id": "https://api.discover.swiss/test/info/v2/accommodations/acc_s9t_huadtqba-vqic-eqfa-rvvr-ctfeqfteeaie",
-
-            "identifier": "acc_s9t_huadtqba-vqic-eqfa-rvvr-ctfeqfteeaie",
-
-            "type": "schema.org/Accommodation",
-
-            "additionalType": "MeetingRoom",
-
-            "name": "Turm Sitzungszimmer"
-
-        }
-
-    ],
-
-    "address": {
-
-        "givenName": "Hans",
-
-        "familyName": "Muster",
-
-        "salutation": "mr",
-
-        "addressCountry": "CH",
-
-        "addressLocality": "St.Gallen ",
-
-        "addressRegion": "MUSTER",
-
-        "postalCode": "9000",
-
-        "streetAddress": "Musterstrasse",
-
-        "email": "info@hotelweistein.tld",
-
-        "telephone": "+41 71 333 66 99"
-
-    },
-
-    "geo": {
-
-        "latitude": 47.4214519,
-
-        "longitude": 9.3754457
-
-    },
-
-    "maximumAttendeeCapacity": 1000,
-
-    "openingHoursSpecification": [
-
-        {
-
-            "opens": "12:00:00",
-
-            "dayOfWeek": "Monday",
-
-            "closes": "22:00:00"
-
-        },
-
-        {
-
-            "opens": "09:00:00",
-
-            "dayOfWeek": "Tuesday",
-
-            "closes": "23:00:00"
-
-        },
-
-        {
-
-            "opens": "09:00:00",
-
-            "dayOfWeek": "Wednesday",
-
-            "closes": "23:00:00"
-
-        },
-
-        {
-
-            "opens": "09:00:00",
-
-            "dayOfWeek": "Thursday",
-
-            "closes": "23:00:00"
-
-        },
-
-        {
-
-            "opens": "08:00:00",
-
-            "dayOfWeek": "Friday",
-
-            "closes": "23:00:00"
-
-        },
-
-        {
-
-            "opens": "10:00:00",
-
-            "dayOfWeek": "Saturday",
-
-            "closes": "13:00:00"
-
-        },
-
-        {
-
-            "opens": "17:00:00",
-
-            "dayOfWeek": "Saturday",
-
-            "closes": "21:30:00"
-
-        }
-
-    ],
-
-    "photo": [
-
-        {
-
-            "tagToQuery": [
-
-                "image-saisonality-summer"
-
-            ],
-
-            "contentUrl": "https://media-test-v2.discover.swiss/rawmedia/ctd/ecd7244a99e452b89510710d8c91c989e4d69422_9734161971_4156997bc6_o.jpg",
-
-            "copyrightNotice": "DEV discover.swiss product supplier",
-
-            "encodingFormat": "image/jpeg",
-
-            "height": "2886",
-
-            "width": "5130",
-
-            "dataGovernance": {
-
-                "provider": {
-
-                    "acronym": "tso-ctd",
-
-                    "logo": {
+# DiscoverSwissCheckData
+
+Produktionsreife, statische Webapp zum Pruefen von discover.swiss Objektdaten per ID oder Endpoint-Pfad.
+
+## Features
+- GET-Abfragen gegen discover.swiss Info API (TEST und PROD)
+- Konfigurationsverwaltung: erstellen, bearbeiten, loeschen, laden, importieren, exportieren
+- Default-Konfiguration fuer TEST mit `project=tso-test`
+- ID-Parsing fuer reine IDs und Pfadformat (`/endpoint/id`)
+- Pflichtsektionen im Ergebnisbereich:
+	- Medien (`image` als Hauptbild, `photo` als Galerie inkl. `thumbnailUrl`, `contentUrl`, `tagToQuery`)
+	- Accommodation (`accommodation` als Liste)
+	- Links (`link` als klickbare Liste mit Typ/Sprache)
+- JSON-Tools:
+	- JSON im Popup oeffnen
+	- JSON in Zwischenablage kopieren
+- Robuste Fehlerbehandlung (404, Netzwerk, Timeout, CORS-Hinweis)
+- Responsive 2-Bereich-Ansicht mit Tastatur-bedienbarer UI
+
+## Projektstruktur
+```text
+index.html
+assets/styles.css
+src/main.js
+src/modules/constants.js
+src/modules/configStore.js
+src/modules/utils.js
+src/modules/api.js
+src/modules/renderers.js
+exampleRequestBody.json
+discoverswiss-test-v2-infocenter-api.json
+```
+
+## Lokal starten
+Da es eine statische App ist, reicht ein einfacher Webserver.
+
+### Option 1: VS Code Live Server
+- `index.html` oeffnen
+- "Open with Live Server"
+
+### Option 2: Python
+```bash
+python -m http.server 8080
+```
+Dann `http://localhost:8080` aufrufen.
+
+## GitHub Pages Deploy
+1. Repository nach GitHub pushen.
+2. In GitHub: `Settings` -> `Pages`.
+3. Source auf `Deploy from a branch` setzen.
+4. Branch `main`, Folder `/ (root)` auswaehlen.
+5. Speichern. Danach ist die App unter der GitHub-Pages-URL erreichbar.
+
+## API-Konfiguration pflegen
+- Base-URLs und Default-Config: `src/modules/constants.js`
+	- `API_BASE_URLS`
+	- `DEFAULT_CONFIG`
+- Prefix-zu-Endpoint-Mapping: `src/modules/constants.js`
+	- `PREFIX_TO_ENDPOINT`
+- ID-/Pfad-Erkennung: `src/modules/utils.js`
+	- `parseObjectInput(...)`
+- URL-Aufbau und Request-Logik: `src/modules/api.js`
+	- `buildApiUrl(...)`
+	- `fetchObjectById(...)`
+
+## Hinweis zu OpenAPI
+Die Datei `discoverswiss-test-v2-infocenter-api.json` liegt im Projekt und kann fuer Feld-/Endpoint-Details genutzt werden.
 
                         "contentUrl": "https://cdn.discover.swiss/logos/tso-ctd.svg",
 
