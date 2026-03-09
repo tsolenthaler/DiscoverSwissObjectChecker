@@ -180,7 +180,8 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "") {
       endpoint: parsed.endpoint,
       id: parsed.id,
       source: parsed.source,
-      requestUrl
+      requestUrl,
+      objectAtId: json?.["@id"] || ""
     });
 
     renderDescriptionSection(elements.descriptionSection, json);

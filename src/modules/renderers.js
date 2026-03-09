@@ -13,12 +13,15 @@ export function renderStatus(statusEl, message, type = "info") {
 }
 
 export function renderObjectMeta(container, context) {
-  const { endpoint, id, requestUrl, source } = context;
+  const { endpoint, id, requestUrl, source, objectAtId } = context;
+  const sameAsAtId = compareUrls(requestUrl, objectAtId);
   const rows = [
     ["Endpoint", endpoint],
     ["Objekt-ID", id],
     ["Erkannt via", source],
-    ["Request URL", requestUrl]
+    ["Request URL", requestUrl],
+    ["@id", fallbackText(objectAtId, "nicht vorhanden")],
+    ["Request URL == @id", sameAsAtId === null ? "-" : (sameAsAtId ? "✅" : "❌")]
   ];
 
   container.innerHTML = "";
@@ -40,6 +43,33 @@ export function renderObjectMeta(container, context) {
     }
 
     container.append(dt, dd);
+  }
+}
+
+function compareUrls(requestUrl, objectAtId) {
+  const left = normalizeComparableUrl(requestUrl);
+  const right = normalizeComparableUrl(objectAtId);
+
+  if (!left || !right) {
+    return null;
+  }
+
+  return left === right;
+}
+
+function normalizeComparableUrl(value) {
+  const raw = String(value || "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(raw);
+    parsed.search = "";
+    parsed.hash = "";
+    return parsed.toString().replace(/\/$/, "");
+  } catch {
+    return raw.split("?")[0].split("#")[0].replace(/\/$/, "");
   }
 }
 
