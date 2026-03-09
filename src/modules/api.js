@@ -30,12 +30,14 @@ export async function fetchObjectById(config, endpoint, objectId) {
   const timeout = setTimeout(() => controller.abort(), 20000);
 
   try {
+    const headers = {
+      Accept: "application/json",
+      "Ocp-Apim-Subscription-Key": apiKey
+    };
+
     const response = await fetch(requestUrl, {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Ocp-Apim-Subscription-Key": apiKey
-      },
+      headers,
       signal: controller.signal
     });
 
