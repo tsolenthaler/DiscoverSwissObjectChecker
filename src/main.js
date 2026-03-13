@@ -312,6 +312,10 @@ function clearResultSections() {
   elements.descriptionSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.mediaSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.accommodationSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
+  const accommodationTitle = document.querySelector('[data-panel="accommodation"] h3');
+  if (accommodationTitle) {
+    accommodationTitle.textContent = "Accommodation (0)";
+  }
   elements.linksSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.openJsonButton.disabled = true;
   elements.copyJsonButton.disabled = true;

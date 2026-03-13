@@ -316,6 +316,7 @@ function buildMediaServiceUrlFromThumbnail(media) {
 export function renderAccommodationSection(container, payload) {
   container.innerHTML = "";
   const items = toArray(safeGet(payload, "accommodation", []));
+  updateAccommodationTitle(items.length);
 
   if (!items.length) {
     container.innerHTML = '<p class="muted">Keine Accommodation-Eintraege vorhanden.</p>';
@@ -371,6 +372,13 @@ export function renderAccommodationSection(container, payload) {
 
   table.appendChild(tbody);
   container.appendChild(table);
+}
+
+function updateAccommodationTitle(count) {
+  const panelTitle = document.querySelector('[data-panel="accommodation"] h3');
+  if (panelTitle) {
+    panelTitle.textContent = `Accommodation (${count})`;
+  }
 }
 
 function getLinkedObjectId(item) {
