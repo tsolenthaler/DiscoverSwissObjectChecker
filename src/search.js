@@ -20,6 +20,7 @@ const elements = {
   searchForm: document.getElementById("searchForm"),
   searchInput: document.getElementById("searchInput"),
   languageInput: document.getElementById("languageInput"),
+  resultsPerPageInput: document.getElementById("resultsPerPageInput"),
   searchButton: document.getElementById("searchButton"),
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
@@ -133,13 +134,17 @@ function applyLanguageFromActiveConfig(force = false) {
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
+  const resultsPerPage = normalizeResultsPerPage(elements.resultsPerPageInput.value);
+  elements.resultsPerPageInput.value = String(resultsPerPage);
+
   await executeSearch(
     String(elements.searchInput.value || "").trim(),
-    String(elements.languageInput.value || "").trim()
+    String(elements.languageInput.value || "").trim(),
+    resultsPerPage
   );
 }
 
-async function executeSearch(searchText, language) {
+async function executeSearch(searchText, language, resultsPerPage) {
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
@@ -152,7 +157,8 @@ async function executeSearch(searchText, language) {
   try {
     const { json, requestUrl } = await fetchSearchResults(activeConfig, {
       searchText,
-      language
+      language,
+      resultsPerPage
     });
     state.lastPayload = json;
     state.lastRequestUrl = requestUrl;
@@ -185,8 +191,16 @@ function applySearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const searchText = String(params.get("searchText") || "").trim();
   const language = String(params.get("language") || "").trim();
+  const hasResultsPerPage = params.has("resultsPerPage");
+  const hasSearchText = params.has("searchText");
+  const hasLanguage = params.has("language");
+  const resultsPerPage = normalizeResultsPerPage(
+    hasResultsPerPage ? params.get("resultsPerPage") : elements.resultsPerPageInput.value
+  );
 
-  if (!searchText) {
+  elements.resultsPerPageInput.value = String(resultsPerPage);
+
+  if (!hasSearchText && !hasLanguage && !hasResultsPerPage) {
     return;
   }
 
@@ -195,7 +209,19 @@ function applySearchFromUrl() {
     elements.languageInput.value = language;
   }
 
-  void executeSearch(searchText, String(elements.languageInput.value || "").trim());
+  void executeSearch(
+    searchText,
+    String(elements.languageInput.value || "").trim(),
+    resultsPerPage
+  );
+}
+
+function normalizeResultsPerPage(value) {
+  const parsed = Number.parseInt(String(value ?? "").trim(), 10);
+  if (!Number.isFinite(parsed) || parsed <= 0) {
+    return 10;
+  }
+  return parsed;
 }
 
 function extractValues(payload) {

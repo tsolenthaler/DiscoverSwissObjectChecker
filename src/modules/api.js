@@ -23,6 +23,7 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
 export function buildSearchUrl(config, options = {}) {
   const base = String(config.baseUrl || "").replace(/\/+$/, "");
   const searchText = String(options.searchText || "").trim();
+  const resultsPerPageRaw = options.resultsPerPage;
 
   if (!base) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
@@ -32,6 +33,11 @@ export function buildSearchUrl(config, options = {}) {
 
   if (searchText) {
     url.searchParams.set("searchText", searchText);
+  }
+
+  const resultsPerPage = Number.parseInt(String(resultsPerPageRaw ?? "").trim(), 10);
+  if (Number.isFinite(resultsPerPage) && resultsPerPage > 0) {
+    url.searchParams.set("resultsPerPage", String(resultsPerPage));
   }
 
   if (config.project) {
@@ -115,7 +121,10 @@ export async function fetchSearchResults(config, options = {}) {
     throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
   }
 
-  const requestUrl = buildSearchUrl(config, { searchText: options.searchText });
+  const requestUrl = buildSearchUrl(config, {
+    searchText: options.searchText,
+    resultsPerPage: options.resultsPerPage
+  });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
 
