@@ -52,6 +52,22 @@
     </section>
 
     <section class="panel results" aria-label="Suchergebnisse">
+      <article class="card">
+        <div class="stack compact">
+          <label for="searchQueryUrl">Search Query URL</label>
+          <div class="query-url-row">
+            <input
+              id="searchQueryUrl"
+              type="text"
+              readonly
+              placeholder="Noch keine Suche ausgeführt."
+              aria-label="Search Query URL"
+            >
+            <button type="button" id="copyQueryUrlButton" class="ghost" disabled>URL kopieren</button>
+          </div>
+        </div>
+      </article>
+
       <div class="result-head">
         <h2>Ergebnisse</h2>
         <div class="button-row">

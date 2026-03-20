@@ -12,7 +12,8 @@ import { renderStatus } from "./modules/renderers.js";
 
 const state = {
   activeConfigId: null,
-  lastPayload: null
+  lastPayload: null,
+  lastRequestUrl: ""
 };
 
 const elements = {
@@ -24,6 +25,8 @@ const elements = {
   configSelect: document.getElementById("configSelect"),
   resultsList: document.getElementById("resultsList"),
   resultCount: document.getElementById("resultCount"),
+  searchQueryUrl: document.getElementById("searchQueryUrl"),
+  copyQueryUrlButton: document.getElementById("copyQueryUrlButton"),
   openJsonButton: document.getElementById("openJsonButton"),
   jsonDialog: document.getElementById("jsonDialog"),
   jsonOutput: document.getElementById("jsonOutput")
@@ -54,6 +57,19 @@ function ensureDefaultConfig() {
 
 function bindEvents() {
   elements.searchForm.addEventListener("submit", handleSearchSubmit);
+
+  elements.copyQueryUrlButton.addEventListener("click", async () => {
+    if (!state.lastRequestUrl) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(state.lastRequestUrl);
+      renderStatus(elements.status, "Search Query URL in Zwischenablage kopiert.", "success");
+    } catch {
+      renderStatus(elements.status, "Kopieren fehlgeschlagen. Browser-Berechtigung pruefen.", "warn");
+    }
+  });
 
   elements.openJsonButton.addEventListener("click", () => {
     if (!state.lastPayload) {
@@ -134,11 +150,14 @@ async function executeSearch(searchText, language) {
   renderStatus(elements.status, "Suche wird ausgefuehrt...", "info");
 
   try {
-    const { json } = await fetchSearchResults(activeConfig, {
+    const { json, requestUrl } = await fetchSearchResults(activeConfig, {
       searchText,
       language
     });
     state.lastPayload = json;
+    state.lastRequestUrl = requestUrl;
+    elements.searchQueryUrl.value = requestUrl;
+    elements.copyQueryUrlButton.disabled = false;
 
     const values = extractValues(json);
     renderResults(values);
@@ -150,6 +169,9 @@ async function executeSearch(searchText, language) {
     renderStatus(elements.status, "Suche erfolgreich abgeschlossen.", "success");
   } catch (error) {
     state.lastPayload = null;
+    state.lastRequestUrl = "";
+    elements.searchQueryUrl.value = "";
+    elements.copyQueryUrlButton.disabled = true;
     renderEmptyResults("Suche fehlgeschlagen.");
     elements.openJsonButton.disabled = true;
     renderStatus(elements.status, error.message || "Unbekannter Fehler.", "error");
