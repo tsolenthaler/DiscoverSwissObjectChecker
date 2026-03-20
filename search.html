@@ -56,7 +56,10 @@
     <section class="panel results" aria-label="Suchergebnisse">
       <div class="result-head">
         <h2>Ergebnisse</h2>
-        <p id="resultCount" class="muted">Noch keine Suche ausgeführt.</p>
+        <div class="button-row">
+          <p id="resultCount" class="muted">Noch keine Suche ausgeführt.</p>
+          <button type="button" id="openJsonButton" class="ghost" disabled>JSON im Popup öffnen</button>
+        </div>
       </div>
 
       <article class="card">
@@ -66,6 +69,14 @@
       </article>
     </section>
   </main>
+
+  <dialog id="jsonDialog" aria-label="JSON Daten im Popup">
+    <form method="dialog" class="dialog-header">
+      <h3>JSON Ausgabe</h3>
+      <button>Schliessen</button>
+    </form>
+    <pre id="jsonOutput"></pre>
+  </dialog>
 
   <script type="module" src="src/search.js"></script>
 </body>

@@ -11,7 +11,8 @@ import { fetchSearchResults } from "./modules/api.js";
 import { renderStatus } from "./modules/renderers.js";
 
 const state = {
-  activeConfigId: null
+  activeConfigId: null,
+  lastPayload: null
 };
 
 const elements = {
@@ -22,7 +23,10 @@ const elements = {
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
   resultsList: document.getElementById("resultsList"),
-  resultCount: document.getElementById("resultCount")
+  resultCount: document.getElementById("resultCount"),
+  openJsonButton: document.getElementById("openJsonButton"),
+  jsonDialog: document.getElementById("jsonDialog"),
+  jsonOutput: document.getElementById("jsonOutput")
 };
 
 init();
@@ -50,6 +54,15 @@ function ensureDefaultConfig() {
 
 function bindEvents() {
   elements.searchForm.addEventListener("submit", handleSearchSubmit);
+
+  elements.openJsonButton.addEventListener("click", () => {
+    if (!state.lastPayload) {
+      return;
+    }
+
+    elements.jsonOutput.textContent = JSON.stringify(state.lastPayload, null, 2);
+    elements.jsonDialog.showModal();
+  });
 
   elements.configSelect.addEventListener("change", (event) => {
     const selectedId = event.target.value;
@@ -131,16 +144,20 @@ async function executeSearch(searchText, language) {
       searchText,
       language
     });
+    state.lastPayload = json;
 
     const values = extractValues(json);
     renderResults(values);
+    elements.openJsonButton.disabled = false;
 
     markConfigAsUsed(activeConfig.id);
     reloadConfigSelect(false);
 
     renderStatus(elements.status, "Suche erfolgreich abgeschlossen.", "success");
   } catch (error) {
+    state.lastPayload = null;
     renderEmptyResults("Suche fehlgeschlagen.");
+    elements.openJsonButton.disabled = true;
     renderStatus(elements.status, error.message || "Unbekannter Fehler.", "error");
   } finally {
     elements.searchButton.disabled = false;
