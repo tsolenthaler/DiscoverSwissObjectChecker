@@ -24,6 +24,7 @@ export function buildSearchUrl(config, options = {}) {
   const base = String(config.baseUrl || "").replace(/\/+$/, "");
   const searchText = String(options.searchText || "").trim();
   const resultsPerPageRaw = options.resultsPerPage;
+  const filters = String(options.filters || "").trim();
 
   if (!base) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
@@ -38,6 +39,10 @@ export function buildSearchUrl(config, options = {}) {
   const resultsPerPage = Number.parseInt(String(resultsPerPageRaw ?? "").trim(), 10);
   if (Number.isFinite(resultsPerPage) && resultsPerPage > 0) {
     url.searchParams.set("resultsPerPage", String(resultsPerPage));
+  }
+
+  if (filters) {
+    url.searchParams.set("filters", filters);
   }
 
   if (config.project) {
@@ -123,7 +128,8 @@ export async function fetchSearchResults(config, options = {}) {
 
   const requestUrl = buildSearchUrl(config, {
     searchText: options.searchText,
-    resultsPerPage: options.resultsPerPage
+    resultsPerPage: options.resultsPerPage,
+    filters: options.filters
   });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);

@@ -21,6 +21,7 @@ const elements = {
   searchInput: document.getElementById("searchInput"),
   languageInput: document.getElementById("languageInput"),
   resultsPerPageInput: document.getElementById("resultsPerPageInput"),
+  identifierInput: document.getElementById("identifierInput"),
   searchButton: document.getElementById("searchButton"),
   status: document.getElementById("status"),
   configSelect: document.getElementById("configSelect"),
@@ -135,16 +136,20 @@ async function handleSearchSubmit(event) {
   event.preventDefault();
 
   const resultsPerPage = normalizeResultsPerPage(elements.resultsPerPageInput.value);
+  const identifierValues = parseIdentifiers(elements.identifierInput.value);
+  const filters = buildIdentifierFilter(identifierValues);
   elements.resultsPerPageInput.value = String(resultsPerPage);
+  elements.identifierInput.value = identifierValues.join("\n");
 
   await executeSearch(
     String(elements.searchInput.value || "").trim(),
     String(elements.languageInput.value || "").trim(),
-    resultsPerPage
+    resultsPerPage,
+    filters
   );
 }
 
-async function executeSearch(searchText, language, resultsPerPage) {
+async function executeSearch(searchText, language, resultsPerPage, filters = "") {
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
@@ -158,7 +163,8 @@ async function executeSearch(searchText, language, resultsPerPage) {
     const { json, requestUrl } = await fetchSearchResults(activeConfig, {
       searchText,
       language,
-      resultsPerPage
+      resultsPerPage,
+      filters
     });
     state.lastPayload = json;
     state.lastRequestUrl = requestUrl;
@@ -191,16 +197,18 @@ function applySearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const searchText = String(params.get("searchText") || "").trim();
   const language = String(params.get("language") || "").trim();
+  const filters = String(params.get("filters") || "").trim();
   const hasResultsPerPage = params.has("resultsPerPage");
   const hasSearchText = params.has("searchText");
   const hasLanguage = params.has("language");
+  const hasFilters = params.has("filters");
   const resultsPerPage = normalizeResultsPerPage(
     hasResultsPerPage ? params.get("resultsPerPage") : elements.resultsPerPageInput.value
   );
 
   elements.resultsPerPageInput.value = String(resultsPerPage);
 
-  if (!hasSearchText && !hasLanguage && !hasResultsPerPage) {
+  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters) {
     return;
   }
 
@@ -208,12 +216,51 @@ function applySearchFromUrl() {
   if (language) {
     elements.languageInput.value = language;
   }
+  const filterIdentifiers = parseIdentifiersFromFilter(filters);
+  if (filterIdentifiers.length) {
+    elements.identifierInput.value = filterIdentifiers.join("\n");
+  }
 
   void executeSearch(
     searchText,
     String(elements.languageInput.value || "").trim(),
-    resultsPerPage
+    resultsPerPage,
+    filters
   );
+}
+
+function parseIdentifiers(rawInput) {
+  return String(rawInput || "")
+    .split(/[\n,;]+/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+function escapeODataString(value) {
+  return String(value).replace(/'/g, "''");
+}
+
+function buildIdentifierFilter(identifiers) {
+  if (!Array.isArray(identifiers) || !identifiers.length) {
+    return "";
+  }
+
+  return identifiers
+    .map((id) => `identifier eq '${escapeODataString(id)}'`)
+    .join(" or ");
+}
+
+function parseIdentifiersFromFilter(filterText) {
+  const identifiers = [];
+  const regex = /identifier\s+eq\s+'((?:[^']|'{2})+)'/gi;
+  let match = regex.exec(String(filterText || ""));
+
+  while (match) {
+    identifiers.push(match[1].replace(/''/g, "'"));
+    match = regex.exec(String(filterText || ""));
+  }
+
+  return identifiers;
 }
 
 function normalizeResultsPerPage(value) {
