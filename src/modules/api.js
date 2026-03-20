@@ -28,12 +28,11 @@ export function buildSearchUrl(config, options = {}) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
   }
 
-  if (!searchText) {
-    throw new Error("Bitte einen Suchtext eingeben.");
-  }
-
   const url = new URL(`${base}/search`);
-  url.searchParams.set("searchText", searchText);
+
+  if (searchText) {
+    url.searchParams.set("searchText", searchText);
+  }
 
   if (config.project) {
     url.searchParams.set("project", config.project);

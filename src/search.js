@@ -124,12 +124,6 @@ async function handleSearchSubmit(event) {
 }
 
 async function executeSearch(searchText, language) {
-
-  if (!searchText) {
-    renderStatus(elements.status, "Bitte einen Suchtext eingeben.", "warn");
-    return;
-  }
-
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
