@@ -296,6 +296,23 @@ hr {
   color: var(--muted);
 }
 
+.search-result-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fffefc;
+  padding: 0.7rem;
+  list-style: none;
+}
+
+.search-result-link {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.search-result-link:hover {
+  text-decoration: underline;
+}
+
 .result-table {
   width: 100%;
   border-collapse: collapse;

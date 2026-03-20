@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiscoverSwiss Suche</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="bg-shape bg-shape-a" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-b" aria-hidden="true"></div>
+
+  <header class="page-header">
+    <h1>DiscoverSwiss Suche</h1>
+    <p>Objekte via Search API suchen und zur Detailansicht öffnen.</p>
+    <p><a href="index.html">Zur Objektansicht</a> · <a href="settings.html">Zu Einstellungen</a></p>
+  </header>
+
+  <main class="layout" aria-label="Discover Swiss Suche">
+    <section class="panel controls" aria-label="Suchformular und Konfiguration">
+      <h2>Gespeicherte Konfigurationen</h2>
+      <div class="stack compact">
+        <label for="configSelect">Aktive Konfiguration</label>
+        <select id="configSelect" aria-label="Gespeicherte Konfigurationen"></select>
+      </div>
+
+      <hr>
+
+      <h2>Suche</h2>
+      <form id="searchForm" class="stack" novalidate>
+        <label for="searchInput">Suchtext</label>
+        <input
+          id="searchInput"
+          name="searchInput"
+          type="text"
+          placeholder="z. B. Hotel Elmer"
+          required
+          aria-required="true"
+        >
+
+        <label for="languageInput">Sprache (optional, überschreibt Konfiguration)</label>
+        <input
+          id="languageInput"
+          name="languageInput"
+          type="text"
+          placeholder="z. B. de, en, fr"
+          aria-label="Sprache für API Anfrage"
+        >
+
+        <button type="submit" id="searchButton">Suchen</button>
+      </form>
+
+      <div id="status" class="status" role="status" aria-live="polite">Bereit</div>
+    </section>
+
+    <section class="panel results" aria-label="Suchergebnisse">
+      <div class="result-head">
+        <h2>Ergebnisse</h2>
+        <p id="resultCount" class="muted">Noch keine Suche ausgeführt.</p>
+      </div>
+
+      <article class="card">
+        <ul id="resultsList" class="list" aria-live="polite">
+          <li class="muted">Noch keine Daten geladen.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="src/search.js"></script>
+</body>
+</html>
