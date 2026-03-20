@@ -226,7 +226,8 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
       name: json?.name || "",
       source: parsed.source,
       requestUrl,
-      objectAtId: json?.["@id"] || ""
+      objectAtId: json?.["@id"] || "",
+      environment: activeConfig.environment
     });
 
     renderDescriptionSection(elements.descriptionSection, json);

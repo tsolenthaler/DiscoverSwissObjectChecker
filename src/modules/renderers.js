@@ -13,16 +13,18 @@ export function renderStatus(statusEl, message, type = "info") {
 }
 
 export function renderObjectMeta(container, context) {
-  const { endpoint, id, name, requestUrl, source, objectAtId } = context;
+  const { endpoint, id, name, requestUrl, source, objectAtId, environment } = context;
   const sameAsAtId = compareUrls(requestUrl, objectAtId);
+  const infoCenterUrl = buildInfoCenterUrl(environment, id);
   const rows = [
     ["Name", fallbackText(name, "nicht vorhanden")],
-    ["Endpoint", endpoint],
+    ["Infocenter", fallbackText(infoCenterUrl, "nicht vorhanden")],
+    ["API Endpoint", endpoint],
     ["Objekt-ID", id],
     ["Erkannt via", source],
-    ["Request URL", requestUrl],
-    ["@id", fallbackText(objectAtId, "nicht vorhanden")],
-    ["Request URL == @id", sameAsAtId === null ? "-" : (sameAsAtId ? "✅" : "❌")]
+    ["API Request URL", requestUrl],
+    ["API @id", fallbackText(objectAtId, "nicht vorhanden")],
+    ["API Request URL == API @id", sameAsAtId === null ? "-" : (sameAsAtId ? "✅" : "❌")]
   ];
 
   container.innerHTML = "";
@@ -32,7 +34,7 @@ export function renderObjectMeta(container, context) {
     dt.textContent = term;
     const dd = document.createElement("dd");
 
-    if (term === "Request URL") {
+    if (term === "API Request URL" || term === "Infocenter") {
       const a = document.createElement("a");
       a.href = value;
       a.target = "_blank";
@@ -45,6 +47,19 @@ export function renderObjectMeta(container, context) {
 
     container.append(dt, dd);
   }
+}
+
+function buildInfoCenterUrl(environment, id) {
+  const objectId = String(id || "").trim();
+  if (!objectId) {
+    return "";
+  }
+
+  const host = environment === "prod"
+    ? "https://partner.discover.swiss"
+    : "https://partner-test.discover.swiss";
+
+  return `${host}/infocenter/details/Event/${encodeURIComponent(objectId)}`;
 }
 
 function compareUrls(requestUrl, objectAtId) {
