@@ -19,9 +19,9 @@ export function renderObjectMeta(container, context) {
   const rows = [
     ["Name", fallbackText(name, "nicht vorhanden")],
     ["Infocenter", fallbackText(infoCenterUrl, "nicht vorhanden")],
-    ["API Endpoint", endpoint],
     ["Objekt-ID", id],
     ["Erkannt via", source],
+    ["API Endpoint", endpoint],
     ["API Request URL", requestUrl],
     ["API @id", fallbackText(objectAtId, "nicht vorhanden")],
     ["API Request URL == API @id", sameAsAtId === null ? "-" : (sameAsAtId ? "✅" : "❌")]
