@@ -32,6 +32,7 @@ function init() {
   bindEvents();
   reloadConfigSelect(true);
   renderStatus(elements.status, "Bereit", "info");
+  applySearchFromUrl();
 }
 
 function ensureDefaultConfig() {
@@ -103,8 +104,13 @@ function applyLanguageFromActiveConfig(force = false) {
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
-  const searchText = String(elements.searchInput.value || "").trim();
-  const language = String(elements.languageInput.value || "").trim();
+  await executeSearch(
+    String(elements.searchInput.value || "").trim(),
+    String(elements.languageInput.value || "").trim()
+  );
+}
+
+async function executeSearch(searchText, language) {
 
   if (!searchText) {
     renderStatus(elements.status, "Bitte einen Suchtext eingeben.", "warn");
@@ -139,6 +145,23 @@ async function handleSearchSubmit(event) {
   } finally {
     elements.searchButton.disabled = false;
   }
+}
+
+function applySearchFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const searchText = String(params.get("searchText") || "").trim();
+  const language = String(params.get("language") || "").trim();
+
+  if (!searchText) {
+    return;
+  }
+
+  elements.searchInput.value = searchText;
+  if (language) {
+    elements.languageInput.value = language;
+  }
+
+  void executeSearch(searchText, String(elements.languageInput.value || "").trim());
 }
 
 function extractValues(payload) {
