@@ -160,7 +160,8 @@ async function executeSearch(searchText, language) {
     elements.copyQueryUrlButton.disabled = false;
 
     const values = extractValues(json);
-    renderResults(values);
+    const totalCount = extractTotalCount(json);
+    renderResults(values, totalCount);
     elements.openJsonButton.disabled = false;
 
     markConfigAsUsed(activeConfig.id);
@@ -213,11 +214,19 @@ function extractValues(payload) {
   return [];
 }
 
-function renderResults(values) {
+function extractTotalCount(payload) {
+  const rawCount = payload?.count;
+  if (typeof rawCount === "number" && Number.isFinite(rawCount)) {
+    return rawCount;
+  }
+  return null;
+}
+
+function renderResults(values, totalCount = null) {
   elements.resultsList.innerHTML = "";
 
   if (!values.length) {
-    renderEmptyResults("Keine Treffer gefunden.");
+    renderEmptyResults("Keine Treffer gefunden.", totalCount);
     return;
   }
 
@@ -267,16 +276,18 @@ function renderResults(values) {
   });
 
   elements.resultsList.appendChild(fragment);
-  elements.resultCount.textContent = `${values.length} Treffer`;
+  elements.resultCount.textContent =
+    totalCount !== null ? `${values.length} von ${totalCount}` : `${values.length} Treffer`;
 }
 
-function renderEmptyResults(message) {
+function renderEmptyResults(message, totalCount = null) {
   elements.resultsList.innerHTML = "";
   const item = document.createElement("li");
   item.className = "muted";
   item.textContent = message;
   elements.resultsList.appendChild(item);
-  elements.resultCount.textContent = "0 Treffer";
+  elements.resultCount.textContent =
+    totalCount !== null ? `0 von ${totalCount}` : "0 Treffer";
 }
 
 function buildDetailTarget(entry) {
