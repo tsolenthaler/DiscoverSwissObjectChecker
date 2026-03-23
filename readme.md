@@ -4,6 +4,7 @@ Produktionsreife, statische Webapp zum Pruefen von discover.swiss Objektdaten pe
 
 ## Features
 - GET-Abfragen gegen discover.swiss Info API (TEST und PROD)
+- Optionale View-Auswahl in der Suche auf Basis von `search/views?project=...`
 - Konfigurationsverwaltung: erstellen, bearbeiten, loeschen, laden, importieren, exportieren
 - Pro Konfiguration speicherbarer API-Key (`Ocp-Apim-Subscription-Key`)
 - Optionales Scope-Textfeld direkt in der Suche (Standard: leer)
@@ -67,6 +68,7 @@ Dann `http://localhost:8080` aufrufen.
 
 ## Seitenaufteilung
 - `index.html`: Auswahl "Gespeicherte Konfigurationen" und Objekt-Suche inkl. Ergebnisansicht
+- `search.html`: Freitextsuche inkl. optionaler View-Auswahl anhand von Name und Identifier
 - `settings.html`: Vollstaendige Konfigurationsverwaltung (CRUD, Import, Export)
 
 ## Direktaufruf per URL

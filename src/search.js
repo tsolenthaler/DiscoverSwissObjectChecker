@@ -7,13 +7,14 @@ import {
   saveConfig,
   setActiveConfigId
 } from "./modules/configStore.js";
-import { fetchSearchResults } from "./modules/api.js";
+import { fetchSearchResults, fetchSearchViews } from "./modules/api.js";
 import { renderStatus } from "./modules/renderers.js";
 
 const state = {
   activeConfigId: null,
   lastPayload: null,
-  lastRequestUrl: ""
+  lastRequestUrl: "",
+  viewLoadRequestId: 0
 };
 
 const elements = {
@@ -21,6 +22,7 @@ const elements = {
   searchInput: document.getElementById("searchInput"),
   languageInput: document.getElementById("languageInput"),
   resultsPerPageInput: document.getElementById("resultsPerPageInput"),
+  viewSelect: document.getElementById("viewSelect"),
   identifierInput: document.getElementById("identifierInput"),
   searchButton: document.getElementById("searchButton"),
   status: document.getElementById("status"),
@@ -36,11 +38,12 @@ const elements = {
 
 init();
 
-function init() {
+async function init() {
   ensureDefaultConfig();
   bindEvents();
   reloadConfigSelect(true);
   renderStatus(elements.status, "Bereit", "info");
+  await reloadViewSelect({ preferredViewId: getViewIdFromUrl() });
   applySearchFromUrl();
 }
 
@@ -92,6 +95,7 @@ function bindEvents() {
     state.activeConfigId = selectedId;
     applyLanguageFromActiveConfig(true);
     renderStatus(elements.status, "Aktive Konfiguration gewechselt.", "success");
+    void reloadViewSelect({ preferredViewId: "" });
   });
 }
 
@@ -136,6 +140,7 @@ async function handleSearchSubmit(event) {
   event.preventDefault();
 
   const resultsPerPage = normalizeResultsPerPage(elements.resultsPerPageInput.value);
+  const viewId = String(elements.viewSelect.value || "").trim();
   const identifierValues = parseIdentifiers(elements.identifierInput.value);
   const filters = buildIdentifierFilter(identifierValues);
   elements.resultsPerPageInput.value = String(resultsPerPage);
@@ -145,11 +150,12 @@ async function handleSearchSubmit(event) {
     String(elements.searchInput.value || "").trim(),
     String(elements.languageInput.value || "").trim(),
     resultsPerPage,
-    filters
+    filters,
+    viewId
   );
 }
 
-async function executeSearch(searchText, language, resultsPerPage, filters = "") {
+async function executeSearch(searchText, language, resultsPerPage, filters = "", viewId = "") {
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
@@ -164,7 +170,8 @@ async function executeSearch(searchText, language, resultsPerPage, filters = "")
       searchText,
       language,
       resultsPerPage,
-      filters
+      filters,
+      viewId
     });
     state.lastPayload = json;
     state.lastRequestUrl = requestUrl;
@@ -198,17 +205,19 @@ function applySearchFromUrl() {
   const searchText = String(params.get("searchText") || "").trim();
   const language = String(params.get("language") || "").trim();
   const filters = String(params.get("filters") || "").trim();
+  const viewId = String(params.get("viewId") || "").trim();
   const hasResultsPerPage = params.has("resultsPerPage");
   const hasSearchText = params.has("searchText");
   const hasLanguage = params.has("language");
   const hasFilters = params.has("filters");
+  const hasViewId = params.has("viewId");
   const resultsPerPage = normalizeResultsPerPage(
     hasResultsPerPage ? params.get("resultsPerPage") : elements.resultsPerPageInput.value
   );
 
   elements.resultsPerPageInput.value = String(resultsPerPage);
 
-  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters) {
+  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters && !hasViewId) {
     return;
   }
 
@@ -220,13 +229,134 @@ function applySearchFromUrl() {
   if (filterIdentifiers.length) {
     elements.identifierInput.value = filterIdentifiers.join("\n");
   }
+  if (hasViewId) {
+    elements.viewSelect.value = viewId;
+  }
 
   void executeSearch(
     searchText,
     String(elements.languageInput.value || "").trim(),
     resultsPerPage,
-    filters
+    filters,
+    viewId
   );
+}
+
+function getViewIdFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  return String(params.get("viewId") || "").trim();
+}
+
+async function reloadViewSelect({ preferredViewId = "" } = {}) {
+  const activeConfig = getConfigById(state.activeConfigId);
+  const requestId = ++state.viewLoadRequestId;
+
+  if (!activeConfig) {
+    setViewSelectState([], { placeholder: "Keine aktive Konfiguration.", disabled: true });
+    return;
+  }
+
+  if (!String(activeConfig.apiKey || "").trim()) {
+    setViewSelectState([], { placeholder: "API-Key fehlt fuer View-Auswahl.", disabled: true });
+    return;
+  }
+
+  if (!String(activeConfig.project || "").trim()) {
+    setViewSelectState([], { placeholder: "Projekt fehlt fuer View-Auswahl.", disabled: true });
+    return;
+  }
+
+  setViewSelectState([], { placeholder: "Views werden geladen...", disabled: true });
+
+  try {
+    const { json } = await fetchSearchViews(activeConfig, {
+      select: "identifier,name,description"
+    });
+
+    if (requestId !== state.viewLoadRequestId) {
+      return;
+    }
+
+    const views = normalizeViews(json)
+      .filter((entry) => String(entry?.identifier || "").trim())
+      .sort((left, right) => {
+        const leftName = String(left?.name || left?.identifier || "").toLowerCase();
+        const rightName = String(right?.name || right?.identifier || "").toLowerCase();
+        return leftName.localeCompare(rightName, "de");
+      });
+
+    setViewSelectState(views, { preferredViewId, disabled: false });
+  } catch (error) {
+    if (requestId !== state.viewLoadRequestId) {
+      return;
+    }
+
+    setViewSelectState([], { placeholder: "Views konnten nicht geladen werden.", disabled: true });
+    renderStatus(
+      elements.status,
+      `${error.message || "View-Liste konnte nicht geladen werden."} Suche ohne View bleibt moeglich.`,
+      "warn"
+    );
+  }
+}
+
+function normalizeViews(payload) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (Array.isArray(payload?.values)) {
+    return payload.values;
+  }
+
+  if (Array.isArray(payload?.items)) {
+    return payload.items;
+  }
+
+  return [];
+}
+
+function setViewSelectState(views, options = {}) {
+  const preferredViewId = String(options.preferredViewId || "").trim();
+  const placeholder = String(options.placeholder || "Keine View").trim();
+  const disabled = Boolean(options.disabled);
+
+  elements.viewSelect.innerHTML = "";
+
+  const emptyOption = document.createElement("option");
+  emptyOption.value = "";
+  emptyOption.textContent = placeholder;
+  elements.viewSelect.appendChild(emptyOption);
+
+  views.forEach((entry) => {
+    const identifier = String(entry?.identifier || "").trim();
+    if (!identifier) {
+      return;
+    }
+
+    const option = document.createElement("option");
+    option.value = identifier;
+    option.textContent = formatViewOptionLabel(entry);
+    elements.viewSelect.appendChild(option);
+  });
+
+  elements.viewSelect.disabled = disabled;
+  elements.viewSelect.value = preferredViewId;
+
+  if (elements.viewSelect.value !== preferredViewId) {
+    elements.viewSelect.value = "";
+  }
+}
+
+function formatViewOptionLabel(entry) {
+  const name = String(entry?.name || "").trim();
+  const identifier = String(entry?.identifier || "").trim();
+
+  if (name && identifier) {
+    return `${name} [${identifier}]`;
+  }
+
+  return name || identifier || "Unbenannte View";
 }
 
 function parseIdentifiers(rawInput) {
