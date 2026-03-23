@@ -1,0 +1,1802 @@
+[
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-4be8411",
+        "identifier": "tso-4be8411",
+        "additionalType": "Query",
+        "name": "TEST Event View",
+        "description": "New View 2",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "address/postalCode",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Event"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-c837649",
+        "identifier": "tso-c837649",
+        "additionalType": "Query",
+        "name": "TEST LodgingBusiness View",
+        "description": "Unterkünfte Update",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "containedInPlace/id",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "containedInPlace/id",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "containedInPlace/id",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "containedInPlace/id",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|LodgingBusiness"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-7595dae",
+        "identifier": "tso-7595dae",
+        "additionalType": "Query",
+        "name": "TEST Place FoodEstablishment",
+        "description": "Gastronomie",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "address/postalCode",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "Typen",
+                        "en": "Types"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "combinedType",
+                        "en": "combinedType"
+                    },
+                    "name": "combinedType",
+                    "count": 1000,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "leafType",
+                        "en": "leafType"
+                    },
+                    "name": "leafType",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|FoodEstablishment"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-20e9c64",
+        "identifier": "tso-20e9c64",
+        "additionalType": "Query",
+        "name": "TEST Place - Ausflugsziele ",
+        "description": "Ausflugsziele in St.Gallen und Appenzeller Alpen",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Kategorie",
+                        "en": "Categories"
+                    },
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "Typen",
+                        "en": "Types"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "length",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "time",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "rating/condition",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "containedInPlace/id",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-922c795",
+        "identifier": "tso-922c795",
+        "additionalType": "Query",
+        "name": "TEST Product View",
+        "description": "Product",
+        "searchRequest": {
+            "filters": [
+                "standardPrice ge 5.0"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "combinedTypeTree": [
+                "Thing|Product"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-4d0198f",
+        "identifier": "tso-4d0198f",
+        "additionalType": "Query",
+        "name": "TEST combinedType",
+        "description": "New combinedType",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "combinedTypeTree",
+                    "responseName": "combinedTypeTree",
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "combinedType",
+                    "responseName": "combinedType",
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "responseName": "leafType",
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "type",
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-88b5456",
+        "identifier": "tso-88b5456",
+        "additionalType": "Query",
+        "name": "OST Unterkunft",
+        "description": "OST Unterkünfte View",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|LodgingBusiness",
+                "Thing|Place|CivicStructure|RVPark"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-9b87151",
+        "identifier": "tso-9b87151",
+        "additionalType": "Query",
+        "name": "OST Gastronomie",
+        "description": "OST Gastronomie View",
+        "searchRequest": {
+            "project": [
+                "tso-ost"
+            ],
+            "facets": [
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|FoodEstablishment"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-5e968ce",
+        "identifier": "tso-5e968ce",
+        "additionalType": "Query",
+        "name": "OST Freizeit",
+        "description": "OST Freizeit View",
+        "searchRequest": {
+            "filters": [
+                "leafType ne 'MeetingRoom'"
+            ],
+            "project": [
+                "tso-ost"
+            ],
+            "facets": [
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Wetterabhängigkeit",
+                        "en": "Weather conditions"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "weather-conditions"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-83f814f",
+        "identifier": "tso-83f814f",
+        "additionalType": "Query",
+        "name": "OST Map View",
+        "description": "OST alle Objekte",
+        "searchRequest": {
+            "filters": [
+                "leafType ne 'MeetingRoom'"
+            ],
+            "project": [
+                "tso-ost"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Regionen",
+                        "en": "regions"
+                    },
+                    "name": "sourcePartner",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Wetterabhängigkeit",
+                        "en": "Weather conditions"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "weather-conditions"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-38d66d9",
+        "identifier": "tso-38d66d9",
+        "additionalType": "Query",
+        "name": "TEST Tour",
+        "description": "TEST Tour",
+        "searchRequest": {
+            "datasource": [
+                "oua"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|Tour"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-1086d35",
+        "identifier": "tso-1086d35",
+        "additionalType": "Query",
+        "name": "VGL Unterkünfte",
+        "description": "VGL Unterkünfte Objekte",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "leafType",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|LodgingBusiness"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-3d734d7",
+        "identifier": "tso-3d734d7",
+        "additionalType": "Query",
+        "name": "TEST Tags Multitag view",
+        "description": "New Multitag view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Saison",
+                        "en": "Seasonality"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "seasonality"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Küche",
+                        "en": "Culinary"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "culinary"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Wetterabhängigkeit",
+                        "en": "Weather conditions"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "weather-conditions"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Barrierefreiheit",
+                        "en": "Accessibility"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "accessibility"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-8def348",
+        "identifier": "tso-8def348",
+        "additionalType": "Query",
+        "name": "TEST Tags seasonality view",
+        "description": "New Tag seasonality view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "seasonality"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-18d37c9",
+        "identifier": "tso-18d37c9",
+        "additionalType": "Query",
+        "name": "TEST Tags view",
+        "description": "New Tag view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-9f6cb78",
+        "identifier": "tso-9f6cb78",
+        "additionalType": "Query",
+        "name": "TEST containedInPlace/ID",
+        "description": "Test containedInPlace/id",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "containedInPlace/id",
+                    "values": "osm_1683140|plz_8865_0|plz_8867_0|plz_8868_0|plz_8752_0|plz_8753_0|plz_8757_0|plz_8758_0|plz_8874_0|plz_8866_0|plz_8754_0|plz_8750_0|plz_8750_0|plz_8750_0|plz_8755_0|plz_8767_0|plz_8765_0|plz_8766_0|plz_8784_0|plz_8783_0|plz_8751_0|plz_6465_0|plz_6464_0|plz_8772_0|plz_8774_0|plz_8775_0|plz_8775_0|plz_8777_0|plz_8777_0|plz_8782_0|plz_8756_0|plz_8762_0|plz_8762_0|plz_8762_0|plz_8773_0",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-6ea2fdb",
+        "identifier": "tso-6ea2fdb",
+        "additionalType": "Query",
+        "name": "TEST categoryTree",
+        "description": "Test categoryTree",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "categoryTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-226f76b",
+        "identifier": "tso-226f76b",
+        "additionalType": "Query",
+        "name": "TEST Tags accessibility view",
+        "description": "New Tag accessibility view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "accessibility"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-234666d",
+        "identifier": "tso-234666d",
+        "additionalType": "Query",
+        "name": "TEST Tags culinary view",
+        "description": "New Tag culinary view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "culinary"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-7b1a278",
+        "identifier": "tso-7b1a278",
+        "additionalType": "Query",
+        "name": "TEST containedInPlace",
+        "description": "Test containedInPlace",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "containedInPlace",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-455ae2d",
+        "identifier": "tso-455ae2d",
+        "additionalType": "Query",
+        "name": "TEST Tags campaignTag view",
+        "description": "New Tag campaignTag view",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "campaignTag",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-8ae4c23",
+        "identifier": "tso-8ae4c23",
+        "additionalType": "Query",
+        "name": "ce-test-1",
+        "description": "TEST Christian multiple facet names",
+        "searchRequest": {
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Saison de",
+                        "en": "seasonality"
+                    },
+                    "name": "tag",
+                    "responseName": "Saison fallback",
+                    "scope": "current",
+                    "additionalType": [
+                        "seasonality"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "tag",
+                    "responseName": "Küche",
+                    "scope": "current",
+                    "additionalType": [
+                        "culinary"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Wetterabhängigkeit"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "weather-conditions"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-cc6aed2",
+        "identifier": "tso-cc6aed2",
+        "additionalType": "Query",
+        "name": "TSO Map View",
+        "description": "TSO alle Objekte",
+        "searchRequest": {
+            "filters": [
+                "type ne 'MeetingRoom'"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Kategorie",
+                        "en": "Catgories"
+                    },
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "Typen-Baum",
+                        "en": "Type Tree"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-0788979",
+        "identifier": "tso-0788979",
+        "additionalType": "Query",
+        "name": "TSO Map View - Scope All",
+        "description": "TSO alle Objekte - - Scope All",
+        "searchRequest": {
+            "filters": [
+                "type ne 'MeetingRoom'"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Kategorie",
+                        "en": "Catgories"
+                    },
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Typen-Baum",
+                        "en": "Type Tree"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "tag",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-1e472b3",
+        "identifier": "tso-1e472b3",
+        "additionalType": "Query",
+        "name": "TSO Map View - New",
+        "description": "TSO alle Objekte - New",
+        "searchRequest": {
+            "filters": [
+                "type ne 'MeetingRoom'"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Kategorie",
+                        "en": "Catgories"
+                    },
+                    "name": "categoryTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "Typen-Baum",
+                        "en": "Type Tree"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "leafType",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "season",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-d26eae8",
+        "identifier": "tso-d26eae8",
+        "additionalType": "Query",
+        "name": "TEST LodgingBusiness View - NEW",
+        "description": "Unterkünfte",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "name": "combinedType",
+                    "responseName": "combinedType / Typ",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "type",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/name",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/ratingValue",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "starRating/superior",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "amenityFeature",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "award",
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|LodgingBusiness"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-0849029",
+        "identifier": "tso-0849029",
+        "additionalType": "Query",
+        "name": "TEST Place FoodEstablishment - New",
+        "description": "Gastronomie",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "address/addressLocality",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "address/postalCode",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "categoryTree",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "combinedTypeTree",
+                        "en": "combinedTypeTree"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                },
+                {
+                    "responseNames": {
+                        "de": "combinedType",
+                        "en": "combinedType"
+                    },
+                    "name": "combinedType",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "leafType",
+                        "en": "leafType"
+                    },
+                    "name": "leafType",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "priceRange",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "openingHoursSpecification/dayOfWeek",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|FoodEstablishment"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-f191653",
+        "identifier": "tso-f191653",
+        "additionalType": "Query",
+        "name": "VGL Produkt - Shop / Produkte / Gutscheine",
+        "description": "VGL Produkt Objekte - Shop / Produkte / Gutscheine",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Ferienregion",
+                        "en": "vacation area"
+                    },
+                    "name": "containedInPlace/id",
+                    "filterValues": [
+                        "osm_1683140",
+                        "plz_8865_0",
+                        "plz_8867_0",
+                        "plz_8868_0",
+                        "plz_8752_0",
+                        "plz_8753_0",
+                        "plz_8757_0",
+                        "plz_8758_0",
+                        "plz_8874_0",
+                        "plz_8866_0",
+                        "plz_8754_0",
+                        "plz_8750_0",
+                        "plz_8750_2",
+                        "plz_8750_3",
+                        "plz_8755_0",
+                        "plz_8767_0",
+                        "plz_8765_0",
+                        "plz_8766_0",
+                        "plz_8784_0",
+                        "plz_8783_0",
+                        "plz_8751_0",
+                        "plz_6465_0",
+                        "plz_6464_0",
+                        "plz_8772_0",
+                        "plz_8774_0",
+                        "plz_8775_1",
+                        "plz_8775_2",
+                        "plz_8777_0",
+                        "plz_8777_2",
+                        "plz_8782_0",
+                        "plz_8756_0",
+                        "plz_8762_0",
+                        "plz_8762_2",
+                        "plz_8762_3",
+                        "plz_8773_0"
+                    ],
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Produkt-Typ",
+                        "en": "Type of product"
+                    },
+                    "name": "leafType",
+                    "count": 100,
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                },
+                {
+                    "responseNames": {
+                        "de": "Saisonalität",
+                        "en": "Seasonality"
+                    },
+                    "name": "tag",
+                    "scope": "current",
+                    "additionalType": [
+                        "seasonality"
+                    ],
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "campaignTag",
+                    "responseName": "Weitere Filter",
+                    "filterValues": [
+                        "vgl_label-kinderregion",
+                        "vgl_label-gl-gutschein",
+                        "vgl_label-unesco",
+                        "vgl_label-glarnerlandpass"
+                    ],
+                    "scope": "current",
+                    "orderBy": "name",
+                    "orderDirection": "asc",
+                    "excludeRedundant": false
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Product"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-ad57366",
+        "identifier": "tso-ad57366",
+        "additionalType": "Query",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-5d85be4",
+        "identifier": "tso-5d85be4",
+        "additionalType": "Query",
+        "name": "Test neue View mit UI",
+        "description": "Test mit UI",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "responseNames": {
+                        "de": "Typ",
+                        "en": "Types"
+                    },
+                    "name": "combinedTypeTree",
+                    "count": 1000,
+                    "scope": "all",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place|LocalBusiness|FoodEstablishment"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-16dc368",
+        "identifier": "tso-16dc368",
+        "additionalType": "Query",
+        "name": "TEST numberOfRooms",
+        "description": "Test numberOfRooms",
+        "searchRequest": {
+            "filters": [
+                "numberOfRooms ne null"
+            ],
+            "project": [
+                "tso-test"
+            ],
+            "facets": [
+                {
+                    "name": "numberOfRooms",
+                    "values": "10|25|34",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": false
+                },
+                {
+                    "name": "combinedTypeTree",
+                    "scope": "current",
+                    "orderBy": "count",
+                    "orderDirection": "desc",
+                    "excludeRedundant": true
+                }
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    },
+    {
+        "@id": "https://api.discover.swiss/test/info/v2/search/views/tso-a4e00d7",
+        "identifier": "tso-a4e00d7",
+        "additionalType": "Query",
+        "name": "TEST maximumAttendeeCapacity",
+        "description": "Test maximumAttendeeCapacity",
+        "searchRequest": {
+            "project": [
+                "tso-test"
+            ],
+            "combinedTypeTree": [
+                "Thing|Place"
+            ]
+        }
+    }
+]
