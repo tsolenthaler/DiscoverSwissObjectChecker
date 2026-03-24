@@ -26,6 +26,7 @@ export function buildSearchUrl(config, options = {}) {
   const resultsPerPageRaw = options.resultsPerPage;
   const filters = String(options.filters || "").trim();
   const viewId = String(options.viewId || "").trim();
+  const publish = options.publish === true;
 
   if (!base) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
@@ -48,6 +49,10 @@ export function buildSearchUrl(config, options = {}) {
 
   if (viewId) {
     url.searchParams.set("viewId", viewId);
+  }
+
+  if (publish) {
+    url.searchParams.set("publish", "true");
   }
 
   if (config.project) {
@@ -157,7 +162,8 @@ export async function fetchSearchResults(config, options = {}) {
     searchText: options.searchText,
     resultsPerPage: options.resultsPerPage,
     filters: options.filters,
-    viewId: options.viewId
+    viewId: options.viewId,
+    publish: options.publish
   });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);

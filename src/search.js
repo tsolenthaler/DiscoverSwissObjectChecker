@@ -23,6 +23,7 @@ const elements = {
   languageInput: document.getElementById("languageInput"),
   resultsPerPageInput: document.getElementById("resultsPerPageInput"),
   viewSelect: document.getElementById("viewSelect"),
+  publishCheckbox: document.getElementById("publishCheckbox"),
   identifierInput: document.getElementById("identifierInput"),
   searchButton: document.getElementById("searchButton"),
   status: document.getElementById("status"),
@@ -151,11 +152,12 @@ async function handleSearchSubmit(event) {
     String(elements.languageInput.value || "").trim(),
     resultsPerPage,
     filters,
-    viewId
+    viewId,
+    Boolean(elements.publishCheckbox?.checked)
   );
 }
 
-async function executeSearch(searchText, language, resultsPerPage, filters = "", viewId = "") {
+async function executeSearch(searchText, language, resultsPerPage, filters = "", viewId = "", publish = false) {
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
@@ -171,7 +173,8 @@ async function executeSearch(searchText, language, resultsPerPage, filters = "",
       language,
       resultsPerPage,
       filters,
-      viewId
+      viewId,
+      publish
     });
     state.lastPayload = json;
     state.lastRequestUrl = requestUrl;
@@ -211,13 +214,15 @@ function applySearchFromUrl() {
   const hasLanguage = params.has("language");
   const hasFilters = params.has("filters");
   const hasViewId = params.has("viewId");
+  const hasPublish = params.has("publish");
+  const publish = String(params.get("publish") || "").trim().toLowerCase() === "true";
   const resultsPerPage = normalizeResultsPerPage(
     hasResultsPerPage ? params.get("resultsPerPage") : elements.resultsPerPageInput.value
   );
 
   elements.resultsPerPageInput.value = String(resultsPerPage);
 
-  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters && !hasViewId) {
+  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters && !hasViewId && !hasPublish) {
     return;
   }
 
@@ -232,13 +237,15 @@ function applySearchFromUrl() {
   if (hasViewId) {
     elements.viewSelect.value = viewId;
   }
+  elements.publishCheckbox.checked = publish;
 
   void executeSearch(
     searchText,
     String(elements.languageInput.value || "").trim(),
     resultsPerPage,
     filters,
-    viewId
+    viewId,
+    publish
   );
 }
 
