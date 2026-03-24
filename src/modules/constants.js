@@ -40,6 +40,7 @@ export const PREFIX_TO_ENDPOINT = {
   pla: "places",
   pro: "products",
   prd: "products",
+  nsp: "products",
   ski: "skiresorts",
   tou: "tours",
   tra: "transportationSystems",
