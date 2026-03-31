@@ -41,6 +41,8 @@ const elements = {
   accommodationSection: document.getElementById("accommodationSection"),
   linksSection: document.getElementById("linksSection"),
 
+  queryUrl: document.getElementById("queryUrl"),
+  copyQueryUrlButton: document.getElementById("copyQueryUrlButton"),
   openJsonButton: document.getElementById("openJsonButton"),
   copyJsonButton: document.getElementById("copyJsonButton"),
   jsonDialog: document.getElementById("jsonDialog"),
@@ -75,6 +77,19 @@ function ensureDefaultConfig() {
 
 function bindEvents() {
   elements.searchForm.addEventListener("submit", handleSearchSubmit);
+
+  elements.copyQueryUrlButton.addEventListener("click", async () => {
+    if (!elements.queryUrl.value) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(elements.queryUrl.value);
+      renderStatus(elements.status, "Query URL in Zwischenablage kopiert.", "success");
+    } catch {
+      renderStatus(elements.status, "Kopieren fehlgeschlagen. Browser-Berechtigung pruefen.", "warn");
+    }
+  });
 
   elements.configSelect.addEventListener("change", (event) => {
     const selectedId = event.target.value;
@@ -235,6 +250,8 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
     renderAccommodationSection(elements.accommodationSection, json);
     renderLinksSection(elements.linksSection, json);
 
+    elements.queryUrl.value = requestUrl;
+    elements.copyQueryUrlButton.disabled = false;
     elements.openJsonButton.disabled = false;
     elements.copyJsonButton.disabled = false;
 
@@ -318,6 +335,10 @@ function clearResultSections() {
     accommodationTitle.textContent = "Accommodation (0)";
   }
   elements.linksSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
+  if (elements.queryUrl) {
+    elements.queryUrl.value = "";
+    elements.copyQueryUrlButton.disabled = true;
+  }
   elements.openJsonButton.disabled = true;
   elements.copyJsonButton.disabled = true;
   state.lastPayload = null;

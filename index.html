@@ -68,6 +68,22 @@
     </section>
 
     <section class="panel results" aria-label="Ergebnisbereich">
+      <article class="card">
+        <div class="stack compact">
+          <label for="queryUrl">Query URL</label>
+          <div class="query-url-row">
+            <input
+              id="queryUrl"
+              type="text"
+              readonly
+              placeholder="Noch keine Daten abgerufen."
+              aria-label="Query URL"
+            >
+            <button type="button" id="copyQueryUrlButton" class="ghost" disabled>URL kopieren</button>
+          </div>
+        </div>
+      </article>
+
       <div class="result-head">
         <h2>Ergebnis</h2>
         <div class="button-row">
