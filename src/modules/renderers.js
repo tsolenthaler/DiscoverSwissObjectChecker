@@ -593,11 +593,14 @@ function buildDataGovernanceOriginContent(value, dataGovernance) {
   const list = document.createElement("ul");
   list.className = "list";
 
-  originEntries.forEach((entry, index) => {
+  originEntries.forEach((entry) => {
     const item = document.createElement("li");
+    const datasourceValue = String(entry?.datasource || "").trim();
     const sourceIdValue = fallbackText(entry?.sourceId, "nicht vorhanden");
     const nameValue = resolveNameWithProviderFallback(entry, dataGovernance, entry?.provider)?.name;
-    item.textContent = `${index + 1}: sourceId = ${sourceIdValue} | name = ${nameValue}`;
+    item.textContent = datasourceValue
+      ? `${datasourceValue} - ${sourceIdValue} - ${nameValue}`
+      : `${sourceIdValue} - ${nameValue}`;
     list.appendChild(item);
   });
 
