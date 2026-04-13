@@ -14,6 +14,7 @@ import {
   renderLinksSection,
   renderMediaSection,
   renderObjectMeta,
+  renderPotentialActionSection,
   renderStatus
 } from "./modules/renderers.js";
 import { parseObjectInput } from "./modules/utils.js";
@@ -40,6 +41,7 @@ const elements = {
   mediaSection: document.getElementById("mediaSection"),
   accommodationSection: document.getElementById("accommodationSection"),
   linksSection: document.getElementById("linksSection"),
+  potentialActionSection: document.getElementById("potentialActionSection"),
 
   queryUrl: document.getElementById("queryUrl"),
   copyQueryUrlButton: document.getElementById("copyQueryUrlButton"),
@@ -249,6 +251,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
     renderMediaSection(elements.mediaSection, json);
     renderAccommodationSection(elements.accommodationSection, json);
     renderLinksSection(elements.linksSection, json);
+    renderPotentialActionSection(elements.potentialActionSection, json);
 
     elements.queryUrl.value = requestUrl;
     elements.copyQueryUrlButton.disabled = false;
@@ -335,6 +338,7 @@ function clearResultSections() {
     accommodationTitle.textContent = "Accommodation (0)";
   }
   elements.linksSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
+  elements.potentialActionSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   if (elements.queryUrl) {
     elements.queryUrl.value = "";
     elements.copyQueryUrlButton.disabled = true;

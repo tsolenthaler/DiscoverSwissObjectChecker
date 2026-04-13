@@ -412,6 +412,64 @@ function getLinkedObjectId(item) {
   return segments[segments.length - 1] || "";
 }
 
+export function renderPotentialActionSection(container, payload) {
+  container.innerHTML = "";
+  const actions = toArray(safeGet(payload, "potentialAction", []));
+
+  if (!actions.length) {
+    container.innerHTML = '<p class="muted">Keine Potential Actions vorhanden.</p>';
+    return;
+  }
+
+  const list = document.createElement("ul");
+  list.className = "list";
+
+  actions.forEach((action) => {
+    const li = document.createElement("li");
+
+    const header = document.createElement("strong");
+    const type = fallbackText(action?.additionalType, "Typ unbekannt");
+    const name = action?.name ? ` – ${action.name}` : "";
+    const language = action?.inLanguage ? ` | Sprache: ${action.inLanguage}` : "";
+    header.textContent = `${type}${name}${language}`;
+    li.appendChild(header);
+
+    const targets = toArray(safeGet(action, "target", []));
+    if (targets.length) {
+      const targetList = document.createElement("ul");
+      targets.forEach((target) => {
+        const targetLi = document.createElement("li");
+        const targetType = fallbackText(target?.type, "Typ unbekannt");
+        const url = String(target?.urlTemplate || "").trim();
+
+        if (url.startsWith("http")) {
+          const a = document.createElement("a");
+          a.href = url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.textContent = url;
+          targetLi.appendChild(document.createTextNode(`${targetType}: `));
+          targetLi.appendChild(a);
+        } else {
+          targetLi.textContent = `${targetType}: ${fallbackText(url, "URL nicht vorhanden")}`;
+        }
+
+        targetList.appendChild(targetLi);
+      });
+      li.appendChild(targetList);
+    } else {
+      const noTarget = document.createElement("span");
+      noTarget.className = "muted";
+      noTarget.textContent = " – keine Targets vorhanden";
+      li.appendChild(noTarget);
+    }
+
+    list.appendChild(li);
+  });
+
+  container.appendChild(list);
+}
+
 export function renderLinksSection(container, payload) {
   container.innerHTML = "";
   const links = toArray(safeGet(payload, "link", []));
