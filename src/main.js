@@ -22,7 +22,10 @@ import { parseObjectInput } from "./modules/utils.js";
 const state = {
   activeConfigId: null,
   lastPayload: null,
-  jsonSearchTerm: ""
+  jsonSearchTerm: "",
+  monacoEditor: null,
+  monacoReadyPromise: null,
+  monacoSearchDecorations: []
 };
 
 const elements = {
@@ -109,14 +112,19 @@ function bindEvents() {
     renderStatus(elements.status, "Aktive Konfiguration gewechselt.", "success");
   });
 
-  elements.openJsonButton.addEventListener("click", () => {
+  elements.openJsonButton.addEventListener("click", async () => {
     if (!state.lastPayload) {
       return;
     }
     state.jsonSearchTerm = "";
     elements.jsonSearchInput.value = "";
-    renderJsonViewer(state.lastPayload, "");
-    elements.jsonDialog.showModal();
+    try {
+      await renderJsonViewer(state.lastPayload, "");
+      elements.jsonDialog.showModal();
+      state.monacoEditor?.layout();
+    } catch (error) {
+      renderStatus(elements.status, error.message || "Monaco konnte nicht geladen werden.", "error");
+    }
   });
 
   elements.copyJsonButton.addEventListener("click", async () => {
@@ -143,15 +151,21 @@ function bindEvents() {
       return;
     }
     state.jsonSearchTerm = String(elements.jsonSearchInput.value || "").trim();
-    renderJsonViewer(state.lastPayload, state.jsonSearchTerm);
+    void runMonacoSearch(state.jsonSearchTerm).catch(() => {
+      elements.jsonSearchInfo.textContent = "Suche aktuell nicht verfuegbar.";
+    });
   });
 
   elements.expandJsonButton.addEventListener("click", () => {
-    setAllJsonNodesOpen(true);
+    void setAllJsonNodesOpen(true);
   });
 
   elements.collapseJsonButton.addEventListener("click", () => {
-    setAllJsonNodesOpen(false);
+    void setAllJsonNodesOpen(false);
+  });
+
+  elements.jsonDialog.addEventListener("close", () => {
+    state.monacoEditor?.setScrollTop(0);
   });
 }
 
@@ -370,226 +384,104 @@ function clearResultSections() {
   elements.copyJsonButton.disabled = true;
   state.lastPayload = null;
   state.jsonSearchTerm = "";
-  elements.jsonOutput.innerHTML = "";
+  if (state.monacoEditor?.getModel()) {
+    state.monacoEditor.getModel().setValue("");
+  } else {
+    elements.jsonOutput.innerHTML = "";
+  }
   elements.jsonSearchInput.value = "";
   elements.jsonSearchInfo.textContent = "Noch keine Suche aktiv.";
 }
 
-function renderJsonViewer(payload, searchTerm = "") {
-  elements.jsonOutput.innerHTML = "";
+async function renderJsonViewer(payload, searchTerm = "") {
+  const editor = await ensureMonacoEditor();
+  const jsonString = JSON.stringify(payload, null, 2);
+  editor.getModel().setValue(jsonString);
+  await setAllJsonNodesOpen(true);
+  await runMonacoSearch(searchTerm);
+}
 
-  const normalizedTerm = String(searchTerm || "").trim().toLowerCase();
-  const context = {
-    normalizedTerm,
-    hasSearch: Boolean(normalizedTerm),
-    matches: 0
-  };
-
-  const root = renderJsonNode(payload, null, "$", context, 0, true, "root");
-  if (root) {
-    elements.jsonOutput.appendChild(root);
+async function ensureMonacoEditor() {
+  if (state.monacoEditor) {
+    return state.monacoEditor;
   }
 
-  if (!context.hasSearch) {
+  if (!state.monacoReadyPromise) {
+    state.monacoReadyPromise = new Promise((resolve, reject) => {
+      if (!window.require || typeof window.require.config !== "function") {
+        reject(new Error("Monaco Loader wurde nicht geladen."));
+        return;
+      }
+
+      window.require.config({
+        paths: {
+          vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs"
+        }
+      });
+
+      window.require(["vs/editor/editor.main"], () => resolve(window.monaco), reject);
+    });
+  }
+
+  const monaco = await state.monacoReadyPromise;
+  const model = monaco.editor.createModel("", "json");
+  state.monacoEditor = monaco.editor.create(elements.jsonOutput, {
+    model,
+    readOnly: true,
+    automaticLayout: true,
+    minimap: { enabled: false },
+    lineNumbers: "on",
+    folding: true,
+    scrollBeyondLastLine: false,
+    wordWrap: "off",
+    tabSize: 2,
+    renderWhitespace: "none",
+    contextmenu: true,
+    theme: "vs"
+  });
+
+  return state.monacoEditor;
+}
+
+async function runMonacoSearch(searchTerm) {
+  const editor = await ensureMonacoEditor();
+  const model = editor.getModel();
+  if (!model) {
+    return;
+  }
+
+  state.monacoSearchDecorations = editor.deltaDecorations(state.monacoSearchDecorations, []);
+  const term = String(searchTerm || "").trim();
+
+  if (!term) {
     elements.jsonSearchInfo.textContent = "Noch keine Suche aktiv.";
     return;
   }
 
-  if (context.matches === 0) {
-    elements.jsonSearchInfo.textContent = `Keine Treffer fuer "${searchTerm}".`;
-  } else {
-    elements.jsonSearchInfo.textContent = `${context.matches} Treffer fuer "${searchTerm}".`;
+  const matches = model.findMatches(term, true, false, false, null, false, 9999);
+
+  if (!matches.length) {
+    elements.jsonSearchInfo.textContent = `Keine Treffer fuer "${term}".`;
+    return;
   }
+
+  state.monacoSearchDecorations = editor.deltaDecorations(
+    state.monacoSearchDecorations,
+    matches.map((match) => ({
+      range: match.range,
+      options: { inlineClassName: "json-monaco-find" }
+    }))
+  );
+
+  editor.setSelection(matches[0].range);
+  editor.revealRangeInCenter(matches[0].range);
+  elements.jsonSearchInfo.textContent = `${matches.length} Treffer fuer "${term}".`;
 }
 
-function renderJsonNode(value, key, path, context, depth, isLast = true, parentType = "object") {
-  const type = getJsonValueType(value);
-
-  if (type === "object" || type === "array") {
-    const details = document.createElement("details");
-    details.className = "json-node";
-    details.dataset.path = path;
-
-    const summary = document.createElement("summary");
-    summary.className = "json-summary";
-    if (key !== null && key !== undefined && parentType === "object") {
-      const keyEl = document.createElement("span");
-      keyEl.className = "json-key";
-      keyEl.textContent = `"${key}"`;
-      summary.appendChild(keyEl);
-      summary.appendChild(document.createTextNode(": "));
-    }
-
-    const openToken = document.createElement("span");
-    openToken.className = "json-punctuation";
-    openToken.textContent = type === "array" ? "[" : "{";
-    summary.appendChild(openToken);
-
-    summary.appendChild(document.createTextNode(" "));
-
-    const typeEl = document.createElement("span");
-    typeEl.className = "json-type json-preview";
-    const size = type === "array" ? value.length : Object.keys(value || {}).length;
-    typeEl.textContent = `${size} ${size === 1 ? "Eintrag" : "Eintraege"}`;
-    summary.appendChild(typeEl);
-
-    summary.appendChild(document.createTextNode(" "));
-    const closeToken = document.createElement("span");
-    closeToken.className = "json-punctuation";
-    closeToken.textContent = type === "array" ? "]" : "}";
-    summary.appendChild(closeToken);
-
-    if (!isLast) {
-      const commaEl = document.createElement("span");
-      commaEl.className = "json-punctuation";
-      commaEl.textContent = ",";
-      summary.appendChild(commaEl);
-    }
-
-    details.appendChild(summary);
-
-    const childrenWrap = document.createElement("div");
-    childrenWrap.className = "json-children";
-
-    const entries = type === "array"
-      ? value.map((item, index) => [String(index), item])
-      : Object.entries(value || {});
-
-    let hasDescendantMatch = false;
-    entries.forEach(([childKey, childValue], index) => {
-      const childPath = type === "array" ? `${path}[${childKey}]` : `${path}.${childKey}`;
-      const childNode = renderJsonNode(
-        childValue,
-        childKey,
-        childPath,
-        context,
-        depth + 1,
-        index === entries.length - 1,
-        type
-      );
-      if (!childNode) {
-        return;
-      }
-      if (childNode.dataset.matches === "true") {
-        hasDescendantMatch = true;
-      }
-      childrenWrap.appendChild(childNode);
-    });
-
-    details.appendChild(childrenWrap);
-
-    const keyMatch = context.hasSearch
-      && parentType === "object"
-      && String(key).toLowerCase().includes(context.normalizedTerm);
-    const valueMatch = context.hasSearch
-      && `${type} ${size}`.toLowerCase().includes(context.normalizedTerm);
-    const selfMatches = Boolean(keyMatch || valueMatch);
-    const nodeMatches = selfMatches || hasDescendantMatch;
-
-    details.dataset.matches = nodeMatches ? "true" : "false";
-    if (context.hasSearch) {
-      details.classList.toggle("json-node-match", selfMatches);
-      details.classList.toggle("json-node-context", !selfMatches && hasDescendantMatch);
-      details.open = nodeMatches;
-      if (selfMatches) {
-        context.matches += 1;
-      }
-      if (keyMatch) {
-        summary.classList.add("json-highlight");
-      }
-    } else {
-      details.open = depth <= 1;
-    }
-
-    return details;
+async function setAllJsonNodesOpen(open) {
+  const editor = await ensureMonacoEditor();
+  const action = editor.getAction(open ? "editor.unfoldAll" : "editor.foldAll");
+  if (action) {
+    await action.run();
   }
-
-  const row = document.createElement("div");
-  row.className = "json-row";
-  row.dataset.path = path;
-
-  let keyEl = null;
-  if (parentType === "object") {
-    keyEl = document.createElement("span");
-    keyEl.className = "json-key";
-    keyEl.textContent = `"${key}"`;
-    row.appendChild(keyEl);
-
-    const sep = document.createElement("span");
-    sep.className = "json-punctuation";
-    sep.textContent = ": ";
-    row.appendChild(sep);
-  }
-
-  const valueEl = document.createElement("span");
-  const valueString = stringifyJsonValue(value);
-  valueEl.className = `json-value json-${type}`;
-  valueEl.textContent = valueString;
-  row.appendChild(valueEl);
-
-  if (!isLast) {
-    const commaEl = document.createElement("span");
-    commaEl.className = "json-punctuation";
-    commaEl.textContent = ",";
-    row.appendChild(commaEl);
-  }
-
-  const keyMatch = context.hasSearch
-    && parentType === "object"
-    && String(key).toLowerCase().includes(context.normalizedTerm);
-  const valueMatch = context.hasSearch && valueString.toLowerCase().includes(context.normalizedTerm);
-  const isMatch = Boolean(keyMatch || valueMatch);
-  row.dataset.matches = isMatch ? "true" : "false";
-
-  if (context.hasSearch && isMatch) {
-    row.classList.add("json-row-match");
-    context.matches += 1;
-    if (keyMatch && keyEl) {
-      keyEl.classList.add("json-highlight");
-    }
-    if (valueMatch) {
-      valueEl.classList.add("json-highlight");
-    }
-  }
-
-  return row;
-}
-
-function getJsonValueType(value) {
-  if (Array.isArray(value)) {
-    return "array";
-  }
-  if (value === null) {
-    return "null";
-  }
-  if (typeof value === "object") {
-    return "object";
-  }
-  if (typeof value === "string") {
-    return "string";
-  }
-  if (typeof value === "number") {
-    return "number";
-  }
-  if (typeof value === "boolean") {
-    return "boolean";
-  }
-  return "unknown";
-}
-
-function stringifyJsonValue(value) {
-  if (typeof value === "string") {
-    return `"${value}"`;
-  }
-  if (value === null) {
-    return "null";
-  }
-  return String(value);
-}
-
-function setAllJsonNodesOpen(open) {
-  const nodes = elements.jsonOutput.querySelectorAll("details.json-node");
-  nodes.forEach((node) => {
-    node.open = open;
-  });
 }

@@ -389,101 +389,17 @@ dialog::backdrop {
 }
 
 .json-viewer {
-  padding: 0.75rem;
+  padding: 0;
   max-height: 66vh;
+  min-height: 420px;
   overflow: auto;
-  background: #f5f7fa;
-  color: #1f2937;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
 }
 
-.json-node {
-  margin-left: 0.65rem;
-  border-left: 1px solid #d1d5db;
-  padding-left: 0.55rem;
-}
-
-.json-summary {
-  cursor: pointer;
-  list-style: none;
-  white-space: pre-wrap;
-}
-
-.json-summary::-webkit-details-marker {
-  display: none;
-}
-
-.json-summary::before {
-  content: "▸";
-  display: inline-block;
-  width: 1rem;
-  color: #2563eb;
-  font-weight: 700;
-}
-
-.json-node[open] > .json-summary::before {
-  content: "▾";
-}
-
-.json-children {
-  margin-top: 0.15rem;
-}
-
-.json-row {
-  margin-left: 1.15rem;
-  white-space: pre-wrap;
-}
-
-.json-key {
-  color: #0f766e;
-}
-
-.json-type {
-  color: #4b5563;
-}
-
-.json-preview {
-  font-style: italic;
-}
-
-.json-punctuation {
-  color: #374151;
-}
-
-.json-value {
-  overflow-wrap: anywhere;
-}
-
-.json-string {
-  color: #b45309;
-}
-
-.json-number {
-  color: #1d4ed8;
-}
-
-.json-boolean,
-.json-null {
-  color: #be123c;
-}
-
-.json-highlight {
-  background: rgba(250, 204, 21, 0.35);
-  border-radius: 3px;
-  padding: 0 2px;
-}
-
-.json-row-match,
-.json-node-match > .json-summary {
-  background: rgba(56, 189, 248, 0.22);
-  border-radius: 6px;
-}
-
-.json-node-context > .json-summary {
-  background: rgba(15, 23, 42, 0.06);
-  border-radius: 6px;
+.monaco-editor .json-monaco-find {
+  background: rgba(250, 204, 21, 0.45);
+  border-radius: 2px;
 }
 
 a {
