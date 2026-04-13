@@ -280,6 +280,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
       endpoint: parsed.endpoint,
       id: parsed.id,
       name: json?.name || "",
+      lastModified: json?.lastModified || "",
       source: parsed.source,
       requestUrl,
       objectAtId: json?.["@id"] || "",

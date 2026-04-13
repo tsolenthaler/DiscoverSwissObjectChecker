@@ -13,11 +13,12 @@ export function renderStatus(statusEl, message, type = "info") {
 }
 
 export function renderObjectMeta(container, context) {
-  const { endpoint, id, name, requestUrl, source, objectAtId, environment } = context;
+  const { endpoint, id, name, lastModified, requestUrl, source, objectAtId, environment } = context;
   const sameAsAtId = compareUrls(requestUrl, objectAtId);
   const infoCenterUrl = buildInfoCenterUrl(environment, id);
   const rows = [
     ["Name", fallbackText(name, "nicht vorhanden")],
+    ["lastModified", fallbackText(lastModified, "nicht vorhanden")],
     ["Infocenter", fallbackText(infoCenterUrl, "nicht vorhanden")],
     ["Objekt-ID", id],
     ["Erkannt via", source],
