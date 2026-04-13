@@ -597,7 +597,7 @@ function buildDataGovernanceOriginContent(value, dataGovernance) {
     const item = document.createElement("li");
     const sourceIdValue = fallbackText(entry?.sourceId, "nicht vorhanden");
     const nameValue = resolveNameWithProviderFallback(entry, dataGovernance, entry?.provider)?.name;
-    item.textContent = `Eintrag ${index + 1}: sourceId = ${sourceIdValue} | name = ${nameValue}`;
+    item.textContent = `${index + 1}: sourceId = ${sourceIdValue} | name = ${nameValue}`;
     list.appendChild(item);
   });
 
