@@ -21,7 +21,8 @@ import { parseObjectInput } from "./modules/utils.js";
 
 const state = {
   activeConfigId: null,
-  lastPayload: null
+  lastPayload: null,
+  jsonSearchTerm: ""
 };
 
 const elements = {
@@ -48,7 +49,11 @@ const elements = {
   openJsonButton: document.getElementById("openJsonButton"),
   copyJsonButton: document.getElementById("copyJsonButton"),
   jsonDialog: document.getElementById("jsonDialog"),
-  jsonOutput: document.getElementById("jsonOutput")
+  jsonOutput: document.getElementById("jsonOutput"),
+  jsonSearchInput: document.getElementById("jsonSearchInput"),
+  jsonSearchInfo: document.getElementById("jsonSearchInfo"),
+  expandJsonButton: document.getElementById("expandJsonButton"),
+  collapseJsonButton: document.getElementById("collapseJsonButton")
 };
 
 init();
@@ -108,7 +113,9 @@ function bindEvents() {
     if (!state.lastPayload) {
       return;
     }
-    elements.jsonOutput.textContent = JSON.stringify(state.lastPayload, null, 2);
+    state.jsonSearchTerm = "";
+    elements.jsonSearchInput.value = "";
+    renderJsonViewer(state.lastPayload, "");
     elements.jsonDialog.showModal();
   });
 
@@ -129,6 +136,22 @@ function bindEvents() {
     button.addEventListener("click", () => {
       activateTab(button.dataset.tab);
     });
+  });
+
+  elements.jsonSearchInput.addEventListener("input", () => {
+    if (!state.lastPayload) {
+      return;
+    }
+    state.jsonSearchTerm = String(elements.jsonSearchInput.value || "").trim();
+    renderJsonViewer(state.lastPayload, state.jsonSearchTerm);
+  });
+
+  elements.expandJsonButton.addEventListener("click", () => {
+    setAllJsonNodesOpen(true);
+  });
+
+  elements.collapseJsonButton.addEventListener("click", () => {
+    setAllJsonNodesOpen(false);
   });
 }
 
@@ -346,4 +369,227 @@ function clearResultSections() {
   elements.openJsonButton.disabled = true;
   elements.copyJsonButton.disabled = true;
   state.lastPayload = null;
+  state.jsonSearchTerm = "";
+  elements.jsonOutput.innerHTML = "";
+  elements.jsonSearchInput.value = "";
+  elements.jsonSearchInfo.textContent = "Noch keine Suche aktiv.";
+}
+
+function renderJsonViewer(payload, searchTerm = "") {
+  elements.jsonOutput.innerHTML = "";
+
+  const normalizedTerm = String(searchTerm || "").trim().toLowerCase();
+  const context = {
+    normalizedTerm,
+    hasSearch: Boolean(normalizedTerm),
+    matches: 0
+  };
+
+  const root = renderJsonNode(payload, null, "$", context, 0, true, "root");
+  if (root) {
+    elements.jsonOutput.appendChild(root);
+  }
+
+  if (!context.hasSearch) {
+    elements.jsonSearchInfo.textContent = "Noch keine Suche aktiv.";
+    return;
+  }
+
+  if (context.matches === 0) {
+    elements.jsonSearchInfo.textContent = `Keine Treffer fuer "${searchTerm}".`;
+  } else {
+    elements.jsonSearchInfo.textContent = `${context.matches} Treffer fuer "${searchTerm}".`;
+  }
+}
+
+function renderJsonNode(value, key, path, context, depth, isLast = true, parentType = "object") {
+  const type = getJsonValueType(value);
+
+  if (type === "object" || type === "array") {
+    const details = document.createElement("details");
+    details.className = "json-node";
+    details.dataset.path = path;
+
+    const summary = document.createElement("summary");
+    summary.className = "json-summary";
+    if (key !== null && key !== undefined && parentType === "object") {
+      const keyEl = document.createElement("span");
+      keyEl.className = "json-key";
+      keyEl.textContent = `"${key}"`;
+      summary.appendChild(keyEl);
+      summary.appendChild(document.createTextNode(": "));
+    }
+
+    const openToken = document.createElement("span");
+    openToken.className = "json-punctuation";
+    openToken.textContent = type === "array" ? "[" : "{";
+    summary.appendChild(openToken);
+
+    summary.appendChild(document.createTextNode(" "));
+
+    const typeEl = document.createElement("span");
+    typeEl.className = "json-type json-preview";
+    const size = type === "array" ? value.length : Object.keys(value || {}).length;
+    typeEl.textContent = `${size} ${size === 1 ? "Eintrag" : "Eintraege"}`;
+    summary.appendChild(typeEl);
+
+    summary.appendChild(document.createTextNode(" "));
+    const closeToken = document.createElement("span");
+    closeToken.className = "json-punctuation";
+    closeToken.textContent = type === "array" ? "]" : "}";
+    summary.appendChild(closeToken);
+
+    if (!isLast) {
+      const commaEl = document.createElement("span");
+      commaEl.className = "json-punctuation";
+      commaEl.textContent = ",";
+      summary.appendChild(commaEl);
+    }
+
+    details.appendChild(summary);
+
+    const childrenWrap = document.createElement("div");
+    childrenWrap.className = "json-children";
+
+    const entries = type === "array"
+      ? value.map((item, index) => [String(index), item])
+      : Object.entries(value || {});
+
+    let hasDescendantMatch = false;
+    entries.forEach(([childKey, childValue], index) => {
+      const childPath = type === "array" ? `${path}[${childKey}]` : `${path}.${childKey}`;
+      const childNode = renderJsonNode(
+        childValue,
+        childKey,
+        childPath,
+        context,
+        depth + 1,
+        index === entries.length - 1,
+        type
+      );
+      if (!childNode) {
+        return;
+      }
+      if (childNode.dataset.matches === "true") {
+        hasDescendantMatch = true;
+      }
+      childrenWrap.appendChild(childNode);
+    });
+
+    details.appendChild(childrenWrap);
+
+    const keyMatch = context.hasSearch
+      && parentType === "object"
+      && String(key).toLowerCase().includes(context.normalizedTerm);
+    const valueMatch = context.hasSearch
+      && `${type} ${size}`.toLowerCase().includes(context.normalizedTerm);
+    const selfMatches = Boolean(keyMatch || valueMatch);
+    const nodeMatches = selfMatches || hasDescendantMatch;
+
+    details.dataset.matches = nodeMatches ? "true" : "false";
+    if (context.hasSearch) {
+      details.classList.toggle("json-node-match", selfMatches);
+      details.classList.toggle("json-node-context", !selfMatches && hasDescendantMatch);
+      details.open = nodeMatches;
+      if (selfMatches) {
+        context.matches += 1;
+      }
+      if (keyMatch) {
+        summary.classList.add("json-highlight");
+      }
+    } else {
+      details.open = depth <= 1;
+    }
+
+    return details;
+  }
+
+  const row = document.createElement("div");
+  row.className = "json-row";
+  row.dataset.path = path;
+
+  let keyEl = null;
+  if (parentType === "object") {
+    keyEl = document.createElement("span");
+    keyEl.className = "json-key";
+    keyEl.textContent = `"${key}"`;
+    row.appendChild(keyEl);
+
+    const sep = document.createElement("span");
+    sep.className = "json-punctuation";
+    sep.textContent = ": ";
+    row.appendChild(sep);
+  }
+
+  const valueEl = document.createElement("span");
+  const valueString = stringifyJsonValue(value);
+  valueEl.className = `json-value json-${type}`;
+  valueEl.textContent = valueString;
+  row.appendChild(valueEl);
+
+  if (!isLast) {
+    const commaEl = document.createElement("span");
+    commaEl.className = "json-punctuation";
+    commaEl.textContent = ",";
+    row.appendChild(commaEl);
+  }
+
+  const keyMatch = context.hasSearch
+    && parentType === "object"
+    && String(key).toLowerCase().includes(context.normalizedTerm);
+  const valueMatch = context.hasSearch && valueString.toLowerCase().includes(context.normalizedTerm);
+  const isMatch = Boolean(keyMatch || valueMatch);
+  row.dataset.matches = isMatch ? "true" : "false";
+
+  if (context.hasSearch && isMatch) {
+    row.classList.add("json-row-match");
+    context.matches += 1;
+    if (keyMatch && keyEl) {
+      keyEl.classList.add("json-highlight");
+    }
+    if (valueMatch) {
+      valueEl.classList.add("json-highlight");
+    }
+  }
+
+  return row;
+}
+
+function getJsonValueType(value) {
+  if (Array.isArray(value)) {
+    return "array";
+  }
+  if (value === null) {
+    return "null";
+  }
+  if (typeof value === "object") {
+    return "object";
+  }
+  if (typeof value === "string") {
+    return "string";
+  }
+  if (typeof value === "number") {
+    return "number";
+  }
+  if (typeof value === "boolean") {
+    return "boolean";
+  }
+  return "unknown";
+}
+
+function stringifyJsonValue(value) {
+  if (typeof value === "string") {
+    return `"${value}"`;
+  }
+  if (value === null) {
+    return "null";
+  }
+  return String(value);
+}
+
+function setAllJsonNodesOpen(open) {
+  const nodes = elements.jsonOutput.querySelectorAll("details.json-node");
+  nodes.forEach((node) => {
+    node.open = open;
+  });
 }

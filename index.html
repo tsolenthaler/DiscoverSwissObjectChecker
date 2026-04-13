@@ -138,7 +138,21 @@
       <h3>JSON Ausgabe</h3>
       <button>Schliessen</button>
     </form>
-    <pre id="jsonOutput"></pre>
+    <div class="json-toolbar">
+      <label for="jsonSearchInput">Suchen (Property oder Wert)</label>
+      <div class="json-toolbar-row">
+        <input
+          id="jsonSearchInput"
+          type="search"
+          placeholder="z. B. potentialAction, de, https://..."
+          aria-label="JSON Suche"
+        >
+        <button type="button" id="expandJsonButton" class="ghost">Alles aufklappen</button>
+        <button type="button" id="collapseJsonButton" class="ghost">Alles zuklappen</button>
+      </div>
+      <p id="jsonSearchInfo" class="muted json-search-info">Noch keine Suche aktiv.</p>
+    </div>
+    <div id="jsonOutput" class="json-viewer" role="tree" aria-label="JSON Baumansicht"></div>
   </dialog>
 
   <script type="module" src="src/main.js"></script>

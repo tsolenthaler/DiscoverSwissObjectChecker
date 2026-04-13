@@ -364,11 +364,126 @@ dialog::backdrop {
 
 #jsonOutput {
   margin: 0;
-  padding: 1rem;
+}
+
+.json-toolbar {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--border);
+  background: #fbf8f1;
+}
+
+.json-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+}
+
+.json-toolbar-row input {
+  flex: 1 1 280px;
+}
+
+.json-search-info {
+  margin: 0.45rem 0 0;
+  font-size: 0.88rem;
+}
+
+.json-viewer {
+  padding: 0.75rem;
   max-height: 66vh;
   overflow: auto;
-  background: #0f172a;
-  color: #f8fafc;
+  background: #f5f7fa;
+  color: #1f2937;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.json-node {
+  margin-left: 0.65rem;
+  border-left: 1px solid #d1d5db;
+  padding-left: 0.55rem;
+}
+
+.json-summary {
+  cursor: pointer;
+  list-style: none;
+  white-space: pre-wrap;
+}
+
+.json-summary::-webkit-details-marker {
+  display: none;
+}
+
+.json-summary::before {
+  content: "▸";
+  display: inline-block;
+  width: 1rem;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.json-node[open] > .json-summary::before {
+  content: "▾";
+}
+
+.json-children {
+  margin-top: 0.15rem;
+}
+
+.json-row {
+  margin-left: 1.15rem;
+  white-space: pre-wrap;
+}
+
+.json-key {
+  color: #0f766e;
+}
+
+.json-type {
+  color: #4b5563;
+}
+
+.json-preview {
+  font-style: italic;
+}
+
+.json-punctuation {
+  color: #374151;
+}
+
+.json-value {
+  overflow-wrap: anywhere;
+}
+
+.json-string {
+  color: #b45309;
+}
+
+.json-number {
+  color: #1d4ed8;
+}
+
+.json-boolean,
+.json-null {
+  color: #be123c;
+}
+
+.json-highlight {
+  background: rgba(250, 204, 21, 0.35);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.json-row-match,
+.json-node-match > .json-summary {
+  background: rgba(56, 189, 248, 0.22);
+  border-radius: 6px;
+}
+
+.json-node-context > .json-summary {
+  background: rgba(15, 23, 42, 0.06);
+  border-radius: 6px;
 }
 
 a {
