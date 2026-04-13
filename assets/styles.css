@@ -305,6 +305,10 @@ hr {
   background: #fffefc;
 }
 
+.media-governance {
+  margin-top: 0.6rem;
+}
+
 .media-card img {
   width: 100%;
   height: 145px;

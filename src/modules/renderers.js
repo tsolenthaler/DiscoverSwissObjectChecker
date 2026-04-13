@@ -144,6 +144,37 @@ export function renderMediaSection(container, payload) {
   container.append(primaryWrap, galleryWrap);
 }
 
+function buildDataGovernanceEntityTable(value, dataGovernance) {
+  const table = document.createElement("table");
+  table.className = "result-table";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>acronym</th><th>identifier</th><th>type</th><th>name</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  const row = document.createElement("tr");
+
+  const acronymCell = document.createElement("td");
+  acronymCell.textContent = fallbackText(value?.acronym, "-");
+
+  const identifierCell = document.createElement("td");
+  identifierCell.textContent = fallbackText(value?.identifier, "-");
+
+  const typeCell = document.createElement("td");
+  typeCell.textContent = fallbackText(value?.type, "-");
+
+  const nameCell = document.createElement("td");
+  const nameResult = resolveNameWithProviderFallback(value, dataGovernance);
+  nameCell.textContent = nameResult.name;
+
+  row.append(acronymCell, identifierCell, typeCell, nameCell);
+  tbody.appendChild(row);
+
+  table.appendChild(tbody);
+  return table;
+}
+
 export function renderDescriptionSection(container, payload) {
   container.innerHTML = "";
 
@@ -278,9 +309,82 @@ function createMediaCard(media, emptyText = "Kein Medium vorhanden.") {
     card.appendChild(mediaServiceLink);
   }
 
+  const mediaGovernance = createMediaDataGovernanceElement(media);
+  if (mediaGovernance) {
+    card.appendChild(mediaGovernance);
+  }
+
   card.appendChild(tagsEl);
   card.appendChild(detailsEl);
   return card;
+}
+
+function createMediaDataGovernanceElement(media) {
+  const dataGovernance = safeGet(media, "dataGovernance", null);
+  if (!dataGovernance || typeof dataGovernance !== "object") {
+    return null;
+  }
+
+  const availableTabs = ["provider", "source"].filter(
+    (key) => dataGovernance[key] !== null && dataGovernance[key] !== undefined
+  );
+
+  if (!availableTabs.length) {
+    return null;
+  }
+
+  const wrap = document.createElement("section");
+  wrap.className = "media-governance";
+
+  const title = document.createElement("p");
+  title.className = "tag-line";
+  title.textContent = "Data Governance";
+  wrap.appendChild(title);
+
+  const tabBar = document.createElement("div");
+  tabBar.className = "data-governance-tabs";
+
+  const panelWrap = document.createElement("div");
+  panelWrap.className = "data-governance-panels";
+
+  const tabButtons = [];
+  const tabPanels = [];
+
+  availableTabs.forEach((tabKey) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "data-governance-tab";
+    button.textContent = tabKey;
+    button.dataset.tab = tabKey;
+    tabBar.appendChild(button);
+    tabButtons.push(button);
+
+    const panel = document.createElement("section");
+    panel.className = "data-governance-panel";
+    panel.dataset.panel = tabKey;
+    panel.appendChild(buildDataGovernanceEntityTable(dataGovernance[tabKey], dataGovernance));
+    panelWrap.appendChild(panel);
+    tabPanels.push(panel);
+
+    button.addEventListener("click", () => {
+      setActiveMediaGovernanceTab(tabKey);
+    });
+  });
+
+  function setActiveMediaGovernanceTab(tabName) {
+    tabButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.tab === tabName);
+    });
+
+    tabPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.dataset.panel === tabName);
+    });
+  }
+
+  setActiveMediaGovernanceTab(availableTabs[0]);
+
+  wrap.append(tabBar, panelWrap);
+  return wrap;
 }
 
 function getMediaLookupId(media) {
