@@ -442,53 +442,76 @@ export function renderPotentialActionSection(container, payload) {
     return;
   }
 
-  const list = document.createElement("ul");
-  list.className = "list";
+  const table = document.createElement("table");
+  table.className = "result-table";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>Typ</th><th>Name</th><th>Sprache</th><th>Target Typ</th><th>Target URL</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
 
   actions.forEach((action) => {
-    const li = document.createElement("li");
-
-    const header = document.createElement("strong");
     const type = fallbackText(action?.additionalType, "Typ unbekannt");
-    const name = action?.name ? ` – ${action.name}` : "";
-    const language = action?.inLanguage ? ` | Sprache: ${action.inLanguage}` : "";
-    header.textContent = `${type}${name}${language}`;
-    li.appendChild(header);
+    const name = fallbackText(action?.name, "-");
+    const language = fallbackText(action?.inLanguage, "-");
 
     const targets = toArray(safeGet(action, "target", []));
     if (targets.length) {
-      const targetList = document.createElement("ul");
       targets.forEach((target) => {
-        const targetLi = document.createElement("li");
+        const row = document.createElement("tr");
         const targetType = fallbackText(target?.type, "Typ unbekannt");
         const url = String(target?.urlTemplate || "").trim();
 
+        const typeCell = document.createElement("td");
+        typeCell.textContent = type;
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = name;
+
+        const languageCell = document.createElement("td");
+        languageCell.textContent = language;
+
+        const targetTypeCell = document.createElement("td");
+        targetTypeCell.textContent = targetType;
+
+        const urlCell = document.createElement("td");
         if (url.startsWith("http")) {
           const a = document.createElement("a");
           a.href = url;
           a.target = "_blank";
           a.rel = "noopener noreferrer";
           a.textContent = url;
-          targetLi.appendChild(document.createTextNode(`${targetType}: `));
-          targetLi.appendChild(a);
+          urlCell.appendChild(a);
         } else {
-          targetLi.textContent = `${targetType}: ${fallbackText(url, "URL nicht vorhanden")}`;
+          urlCell.textContent = fallbackText(url, "URL nicht vorhanden");
         }
 
-        targetList.appendChild(targetLi);
+        row.append(typeCell, nameCell, languageCell, targetTypeCell, urlCell);
+        tbody.appendChild(row);
       });
-      li.appendChild(targetList);
     } else {
-      const noTarget = document.createElement("span");
-      noTarget.className = "muted";
-      noTarget.textContent = " – keine Targets vorhanden";
-      li.appendChild(noTarget);
-    }
+      const row = document.createElement("tr");
+      const typeCell = document.createElement("td");
+      typeCell.textContent = type;
+      const nameCell = document.createElement("td");
+      nameCell.textContent = name;
+      const languageCell = document.createElement("td");
+      languageCell.textContent = language;
+      const targetTypeCell = document.createElement("td");
+      targetTypeCell.className = "muted";
+      targetTypeCell.textContent = "-";
+      const urlCell = document.createElement("td");
+      urlCell.className = "muted";
+      urlCell.textContent = "keine Targets vorhanden";
 
-    list.appendChild(li);
+      row.append(typeCell, nameCell, languageCell, targetTypeCell, urlCell);
+      tbody.appendChild(row);
+    }
   });
 
-  container.appendChild(list);
+  table.appendChild(tbody);
+  container.appendChild(table);
 }
 
 export function renderLinksSection(container, payload) {
@@ -513,7 +536,7 @@ export function renderLinksSection(container, payload) {
     const row = document.createElement("tr");
     const url = safeGet(item, "url", safeGet(item, "@id", ""));
     const type = fallbackText(item?.additionalType || item?.type, "Typ unbekannt");
-    const language = fallbackText(item?.inLanguage || item?.language, "Sprache unbekannt");
+    const language = fallbackText(item?.inLanguage || item?.language, "-");
 
     const urlCell = document.createElement("td");
     const typeCell = document.createElement("td");
