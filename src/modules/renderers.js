@@ -500,14 +500,24 @@ export function renderLinksSection(container, payload) {
     return;
   }
 
-  const list = document.createElement("ul");
-  list.className = "list";
+  const table = document.createElement("table");
+  table.className = "result-table";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>URL</th><th>Typ</th><th>Sprache</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
 
   links.forEach((item) => {
-    const li = document.createElement("li");
+    const row = document.createElement("tr");
     const url = safeGet(item, "url", safeGet(item, "@id", ""));
     const type = fallbackText(item?.additionalType || item?.type, "Typ unbekannt");
     const language = fallbackText(item?.inLanguage || item?.language, "Sprache unbekannt");
+
+    const urlCell = document.createElement("td");
+    const typeCell = document.createElement("td");
+    const languageCell = document.createElement("td");
 
     if (typeof url === "string" && url.startsWith("http")) {
       const a = document.createElement("a");
@@ -515,20 +525,20 @@ export function renderLinksSection(container, payload) {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.textContent = url;
-      li.appendChild(a);
+      urlCell.appendChild(a);
     } else {
-      li.textContent = fallbackText(url, "URL nicht vorhanden");
+      urlCell.textContent = fallbackText(url, "URL nicht vorhanden");
     }
 
-    const meta = document.createElement("span");
-    meta.className = "muted";
-    meta.textContent = ` | Typ: ${type} | Sprache: ${language}`;
-    li.appendChild(meta);
+    typeCell.textContent = type;
+    languageCell.textContent = language;
 
-    list.appendChild(li);
+    row.append(urlCell, typeCell, languageCell);
+    tbody.appendChild(row);
   });
 
-  container.appendChild(list);
+  table.appendChild(tbody);
+  container.appendChild(table);
 }
 
 export function renderDataGovernanceSection(container, payload) {
