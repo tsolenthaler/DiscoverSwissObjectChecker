@@ -10,6 +10,7 @@ import {
 import { fetchObjectById } from "./modules/api.js";
 import {
   renderAccommodationSection,
+  renderDataGovernanceSection,
   renderDescriptionSection,
   renderLinksSection,
   renderMediaSection,
@@ -46,6 +47,7 @@ const elements = {
   accommodationSection: document.getElementById("accommodationSection"),
   linksSection: document.getElementById("linksSection"),
   potentialActionSection: document.getElementById("potentialActionSection"),
+  dataGovernanceSection: document.getElementById("dataGovernanceSection"),
 
   queryUrl: document.getElementById("queryUrl"),
   copyQueryUrlButton: document.getElementById("copyQueryUrlButton"),
@@ -289,6 +291,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
     renderAccommodationSection(elements.accommodationSection, json);
     renderLinksSection(elements.linksSection, json);
     renderPotentialActionSection(elements.potentialActionSection, json);
+    renderDataGovernanceSection(elements.dataGovernanceSection, json);
 
     elements.queryUrl.value = requestUrl;
     elements.copyQueryUrlButton.disabled = false;
@@ -376,6 +379,7 @@ function clearResultSections() {
   }
   elements.linksSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   elements.potentialActionSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
+  elements.dataGovernanceSection.innerHTML = '<p class="muted">Noch keine Daten geladen.</p>';
   if (elements.queryUrl) {
     elements.queryUrl.value = "";
     elements.copyQueryUrlButton.disabled = true;

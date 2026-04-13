@@ -240,6 +240,33 @@ hr {
   display: block;
 }
 
+.data-governance-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.7rem;
+}
+
+.data-governance-tab {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--border);
+}
+
+.data-governance-tab.active {
+  background: color-mix(in srgb, var(--accent), white 82%);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--accent), white 55%);
+}
+
+.data-governance-panel {
+  display: none;
+}
+
+.data-governance-panel.active {
+  display: block;
+}
+
 .card h3,
 .card h4,
 .card h5 {

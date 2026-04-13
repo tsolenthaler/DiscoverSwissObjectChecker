@@ -509,3 +509,130 @@ export function renderLinksSection(container, payload) {
 
   container.appendChild(list);
 }
+
+export function renderDataGovernanceSection(container, payload) {
+  container.innerHTML = "";
+
+  const dataGovernance = safeGet(payload, "dataGovernance", null);
+  if (!dataGovernance || typeof dataGovernance !== "object") {
+    container.innerHTML = '<p class="muted">Keine Data-Governance-Daten vorhanden.</p>';
+    return;
+  }
+
+  const availableTabs = ["origin", "provider", "source"].filter(
+    (key) => dataGovernance[key] !== null && dataGovernance[key] !== undefined
+  );
+
+  if (!availableTabs.length) {
+    container.innerHTML = '<p class="muted">Keine Data-Governance-Daten vorhanden.</p>';
+    return;
+  }
+
+  const tabBar = document.createElement("div");
+  tabBar.className = "data-governance-tabs";
+
+  const panelWrap = document.createElement("div");
+  panelWrap.className = "data-governance-panels";
+
+  const tabButtons = [];
+  const tabPanels = [];
+
+  availableTabs.forEach((tabKey) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "data-governance-tab";
+    button.textContent = tabKey;
+    button.dataset.tab = tabKey;
+    tabBar.appendChild(button);
+    tabButtons.push(button);
+
+    const panel = document.createElement("section");
+    panel.className = "data-governance-panel";
+    panel.dataset.panel = tabKey;
+    panel.appendChild(buildDataGovernanceSubTabContent(tabKey, dataGovernance[tabKey], dataGovernance));
+    panelWrap.appendChild(panel);
+    tabPanels.push(panel);
+
+    button.addEventListener("click", () => {
+      setActiveDataGovernanceTab(tabKey);
+    });
+  });
+
+  function setActiveDataGovernanceTab(tabName) {
+    tabButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.tab === tabName);
+    });
+
+    tabPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.dataset.panel === tabName);
+    });
+  }
+
+  setActiveDataGovernanceTab(availableTabs[0]);
+
+  container.append(tabBar, panelWrap);
+}
+
+function buildDataGovernanceSubTabContent(tabKey, value, dataGovernance) {
+  if (tabKey === "origin") {
+    return buildDataGovernanceOriginContent(value, dataGovernance);
+  }
+
+  return buildDataGovernanceObjectContent(value, dataGovernance);
+}
+
+function buildDataGovernanceOriginContent(value, dataGovernance) {
+  const originEntries = toArray(value);
+  if (!originEntries.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "Keine origin-Eintraege vorhanden.";
+    return empty;
+  }
+
+  const list = document.createElement("ul");
+  list.className = "list";
+
+  originEntries.forEach((entry, index) => {
+    const item = document.createElement("li");
+    const sourceIdValue = fallbackText(entry?.sourceId, "nicht vorhanden");
+    const nameValue = resolveNameWithProviderFallback(entry, dataGovernance, entry?.provider)?.name;
+    item.textContent = `Eintrag ${index + 1}: sourceId = ${sourceIdValue} | name = ${nameValue}`;
+    list.appendChild(item);
+  });
+
+  return list;
+}
+
+function buildDataGovernanceObjectContent(value, dataGovernance) {
+  const grid = document.createElement("dl");
+  grid.className = "meta-grid";
+
+  const dt = document.createElement("dt");
+  dt.textContent = "name";
+  const dd = document.createElement("dd");
+  const nameResult = resolveNameWithProviderFallback(value, dataGovernance);
+  dd.textContent = nameResult.name;
+
+  grid.append(dt, dd);
+  return grid;
+}
+
+function resolveNameWithProviderFallback(value, dataGovernance, entryProvider = null) {
+  const primaryName = String(value?.name || "").trim();
+  if (primaryName) {
+    return { name: primaryName, usedFallback: false };
+  }
+
+  const entryProviderName = String(entryProvider?.name || "").trim();
+  if (entryProviderName) {
+    return { name: `${entryProviderName} (aus provider.name)`, usedFallback: true };
+  }
+
+  const providerName = String(dataGovernance?.provider?.name || "").trim();
+  if (providerName) {
+    return { name: `${providerName} (aus provider.name)`, usedFallback: true };
+  }
+
+  return { name: "nicht vorhanden", usedFallback: false };
+}
