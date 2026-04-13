@@ -119,7 +119,9 @@ export function renderMediaSection(container, payload) {
   const primaryWrap = document.createElement("section");
   primaryWrap.className = "block";
   const primaryTitle = document.createElement("h4");
-  primaryTitle.textContent = "Hauptbild (image)";
+  primaryTitle.textContent = isPrimaryImageFromCtd(primary)
+    ? "Hauptbild (image)"
+    : "⚠️ Hauptbild (image)";
   primaryWrap.appendChild(primaryTitle);
   primaryWrap.appendChild(createMediaCard(primary, "Kein Hauptbild vorhanden."));
 
@@ -142,6 +144,28 @@ export function renderMediaSection(container, payload) {
   }
 
   container.append(primaryWrap, galleryWrap);
+}
+
+function isPrimaryImageFromCtd(primaryImage) {
+  if (!primaryImage || typeof primaryImage !== "object") {
+    return false;
+  }
+
+  const dataGovernance = safeGet(primaryImage, "dataGovernance", null);
+  if (!dataGovernance || typeof dataGovernance !== "object") {
+    return false;
+  }
+
+  const checks = [
+    dataGovernance?.provider?.acronym,
+    dataGovernance?.provider?.identifier,
+    dataGovernance?.provider?.name,
+    dataGovernance?.source?.acronym,
+    dataGovernance?.source?.identifier,
+    dataGovernance?.source?.name
+  ];
+
+  return checks.some((value) => String(value || "").toLowerCase().includes("ctd"));
 }
 
 function buildDataGovernanceEntityTable(value, dataGovernance) {
