@@ -590,21 +590,36 @@ function buildDataGovernanceOriginContent(value, dataGovernance) {
     return empty;
   }
 
-  const list = document.createElement("ul");
-  list.className = "list";
+  const table = document.createElement("table");
+  table.className = "result-table";
+
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>datasource</th><th>sourceId</th><th>name</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
 
   originEntries.forEach((entry) => {
-    const item = document.createElement("li");
-    const datasourceValue = String(entry?.datasource || "").trim();
+    const row = document.createElement("tr");
+    const datasourceValue = fallbackText(String(entry?.datasource || "").trim(), "-");
     const sourceIdValue = fallbackText(entry?.sourceId, "nicht vorhanden");
     const nameValue = resolveNameWithProviderFallback(entry, dataGovernance, entry?.provider)?.name;
-    item.textContent = datasourceValue
-      ? `${datasourceValue} - ${sourceIdValue} - ${nameValue}`
-      : `${sourceIdValue} - ${nameValue}`;
-    list.appendChild(item);
+
+    const datasourceCell = document.createElement("td");
+    datasourceCell.textContent = datasourceValue;
+
+    const sourceIdCell = document.createElement("td");
+    sourceIdCell.textContent = sourceIdValue;
+
+    const nameCell = document.createElement("td");
+    nameCell.textContent = nameValue;
+
+    row.append(datasourceCell, sourceIdCell, nameCell);
+    tbody.appendChild(row);
   });
 
-  return list;
+  table.appendChild(tbody);
+  return table;
 }
 
 function buildDataGovernanceObjectContent(value, dataGovernance) {
@@ -629,12 +644,12 @@ function resolveNameWithProviderFallback(value, dataGovernance, entryProvider = 
 
   const entryProviderName = String(entryProvider?.name || "").trim();
   if (entryProviderName) {
-    return { name: `${entryProviderName} (aus provider.name)`, usedFallback: true };
+    return { name: entryProviderName, usedFallback: true };
   }
 
   const providerName = String(dataGovernance?.provider?.name || "").trim();
   if (providerName) {
-    return { name: `${providerName} (aus provider.name)`, usedFallback: true };
+    return { name: providerName, usedFallback: true };
   }
 
   return { name: "nicht vorhanden", usedFallback: false };
