@@ -119,9 +119,15 @@ export function renderMediaSection(container, payload) {
   const primaryWrap = document.createElement("section");
   primaryWrap.className = "block";
   const primaryTitle = document.createElement("h4");
-  primaryTitle.textContent = isPrimaryImageFromCtd(primary)
-    ? "Hauptbild (image)"
-    : "⚠️ Hauptbild (image)";
+  primaryTitle.textContent = "Hauptbild (image)";
+
+  if (!isPrimaryImageFromCtd(primary)) {
+    const warningIcon = document.createElement("span");
+    warningIcon.textContent = " ⚠️";
+    warningIcon.title = "Hauptbild nicht von Contentdesk Quelle";
+    primaryTitle.appendChild(warningIcon);
+  }
+
   primaryWrap.appendChild(primaryTitle);
   primaryWrap.appendChild(createMediaCard(primary, "Kein Hauptbild vorhanden."));
 
