@@ -10,6 +10,8 @@ import {
 import { fetchSearchResults, fetchSearchViews } from "./modules/api.js";
 import { renderStatus } from "./modules/renderers.js";
 
+const DEFAULT_SEARCH_FIELDS = "name,disambiguatingDescription,description";
+
 const state = {
   activeConfigId: null,
   lastPayload: null,
@@ -43,6 +45,7 @@ init();
 async function init() {
   ensureDefaultConfig();
   bindEvents();
+  elements.searchFieldsInput.value = DEFAULT_SEARCH_FIELDS;
   reloadConfigSelect(true);
   renderStatus(elements.status, "Bereit", "info");
   await reloadViewSelect({ preferredViewId: getViewIdFromUrl() });
@@ -138,17 +141,22 @@ function applyLanguageFromActiveConfig(force = false) {
   elements.languageInput.value = String(activeConfig.language || "").trim();
 }
 
+function getSearchFieldsValue() {
+  return String(elements.searchFieldsInput.value || "").trim() || DEFAULT_SEARCH_FIELDS;
+}
+
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
   const searchText = String(elements.searchInput.value || "").trim();
-  const searchFields = String(elements.searchFieldsInput.value || "").trim();
+  const searchFields = getSearchFieldsValue();
   const resultsPerPage = normalizeResultsPerPage(elements.resultsPerPageInput.value);
   const viewId = String(elements.viewSelect.value || "").trim();
   const identifierValues = parseIdentifiers(elements.identifierInput.value);
   const filters = buildIdentifierFilter(identifierValues);
   elements.resultsPerPageInput.value = String(resultsPerPage);
   elements.identifierInput.value = identifierValues.join("\n");
+  elements.searchFieldsInput.value = searchFields;
 
   await executeSearch(
     searchText,
@@ -234,9 +242,7 @@ function applySearchFromUrl() {
   }
 
   elements.searchInput.value = searchText;
-  if (searchFields) {
-    elements.searchFieldsInput.value = searchFields;
-  }
+  elements.searchFieldsInput.value = searchFields || DEFAULT_SEARCH_FIELDS;
   if (language) {
     elements.languageInput.value = language;
   }
