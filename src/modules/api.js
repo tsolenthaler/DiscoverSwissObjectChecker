@@ -23,6 +23,7 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
 export function buildSearchUrl(config, options = {}) {
   const base = String(config.baseUrl || "").replace(/\/+$/, "");
   const searchText = String(options.searchText || "").trim();
+  const searchFields = String(options.searchFields || "").trim();
   const resultsPerPageRaw = options.resultsPerPage;
   const filters = String(options.filters || "").trim();
   const viewId = String(options.viewId || "").trim();
@@ -36,6 +37,10 @@ export function buildSearchUrl(config, options = {}) {
 
   if (searchText) {
     url.searchParams.set("searchText", searchText);
+  }
+
+  if (searchFields) {
+    url.searchParams.set("searchFields", searchFields);
   }
 
   const resultsPerPage = Number.parseInt(String(resultsPerPageRaw ?? "").trim(), 10);
@@ -160,6 +165,7 @@ export async function fetchSearchResults(config, options = {}) {
 
   const requestUrl = buildSearchUrl(config, {
     searchText: options.searchText,
+    searchFields: options.searchFields,
     resultsPerPage: options.resultsPerPage,
     filters: options.filters,
     viewId: options.viewId,

@@ -20,6 +20,7 @@ const state = {
 const elements = {
   searchForm: document.getElementById("searchForm"),
   searchInput: document.getElementById("searchInput"),
+  searchFieldsInput: document.getElementById("searchFieldsInput"),
   languageInput: document.getElementById("languageInput"),
   resultsPerPageInput: document.getElementById("resultsPerPageInput"),
   viewSelect: document.getElementById("viewSelect"),
@@ -140,6 +141,8 @@ function applyLanguageFromActiveConfig(force = false) {
 async function handleSearchSubmit(event) {
   event.preventDefault();
 
+  const searchText = String(elements.searchInput.value || "").trim();
+  const searchFields = String(elements.searchFieldsInput.value || "").trim();
   const resultsPerPage = normalizeResultsPerPage(elements.resultsPerPageInput.value);
   const viewId = String(elements.viewSelect.value || "").trim();
   const identifierValues = parseIdentifiers(elements.identifierInput.value);
@@ -148,16 +151,17 @@ async function handleSearchSubmit(event) {
   elements.identifierInput.value = identifierValues.join("\n");
 
   await executeSearch(
-    String(elements.searchInput.value || "").trim(),
+    searchText,
     String(elements.languageInput.value || "").trim(),
     resultsPerPage,
     filters,
     viewId,
-    Boolean(elements.publishCheckbox?.checked)
+    Boolean(elements.publishCheckbox?.checked),
+    searchFields
   );
 }
 
-async function executeSearch(searchText, language, resultsPerPage, filters = "", viewId = "", publish = false) {
+async function executeSearch(searchText, language, resultsPerPage, filters = "", viewId = "", publish = false, searchFields = "") {
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
     renderStatus(elements.status, "Keine aktive Konfiguration gefunden.", "error");
@@ -170,6 +174,7 @@ async function executeSearch(searchText, language, resultsPerPage, filters = "",
   try {
     const { json, requestUrl } = await fetchSearchResults(activeConfig, {
       searchText,
+      searchFields,
       language,
       resultsPerPage,
       filters,
@@ -206,11 +211,13 @@ async function executeSearch(searchText, language, resultsPerPage, filters = "",
 function applySearchFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const searchText = String(params.get("searchText") || "").trim();
+  const searchFields = String(params.get("searchFields") || "").trim();
   const language = String(params.get("language") || "").trim();
   const filters = String(params.get("filters") || "").trim();
   const viewId = String(params.get("viewId") || "").trim();
   const hasResultsPerPage = params.has("resultsPerPage");
   const hasSearchText = params.has("searchText");
+  const hasSearchFields = params.has("searchFields");
   const hasLanguage = params.has("language");
   const hasFilters = params.has("filters");
   const hasViewId = params.has("viewId");
@@ -222,11 +229,14 @@ function applySearchFromUrl() {
 
   elements.resultsPerPageInput.value = String(resultsPerPage);
 
-  if (!hasSearchText && !hasLanguage && !hasResultsPerPage && !hasFilters && !hasViewId && !hasPublish) {
+  if (!hasSearchText && !hasSearchFields && !hasLanguage && !hasResultsPerPage && !hasFilters && !hasViewId && !hasPublish) {
     return;
   }
 
   elements.searchInput.value = searchText;
+  if (searchFields) {
+    elements.searchFieldsInput.value = searchFields;
+  }
   if (language) {
     elements.languageInput.value = language;
   }
@@ -245,7 +255,8 @@ function applySearchFromUrl() {
     resultsPerPage,
     filters,
     viewId,
-    publish
+    publish,
+    searchFields
   );
 }
 
