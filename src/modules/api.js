@@ -3,6 +3,7 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
   const safeEndpoint = String(endpoint || "").replace(/^\/+/, "");
   const safeId = encodeURIComponent(String(objectId || "").trim());
   const scope = String(options.scope || "").trim();
+  const select = String(options.select || "").trim();
 
   if (!base || !safeEndpoint || !safeId) {
     throw new Error("Ungueltige URL-Bestandteile fuer den API-Request.");
@@ -15,6 +16,9 @@ export function buildApiUrl(config, endpoint, objectId, options = {}) {
   }
   if (scope) {
     url.searchParams.set("scope", scope);
+  }
+  if (select) {
+    url.searchParams.set("select", select);
   }
 
   return url.toString();
@@ -93,11 +97,12 @@ export async function fetchObjectById(config, endpoint, objectId, options = {}) 
   const apiKey = String(config?.apiKey || "").trim();
   const language = String(options?.language ?? config?.language ?? "").trim();
   const scope = String(options?.scope || "").trim();
+  const select = String(options?.select || "").trim();
   if (!apiKey) {
     throw new Error("API-Key fehlt. Bitte in der Konfiguration den Ocp-Apim-Subscription-Key setzen.");
   }
 
-  const requestUrl = buildApiUrl(config, endpoint, objectId, { scope });
+  const requestUrl = buildApiUrl(config, endpoint, objectId, { scope, select });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
 

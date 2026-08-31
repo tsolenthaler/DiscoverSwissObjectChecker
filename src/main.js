@@ -34,6 +34,7 @@ const elements = {
   objectInput: document.getElementById("objectInput"),
   endpointOverride: document.getElementById("endpointOverride"),
   scopeInput: document.getElementById("scopeInput"),
+  selectInput: document.getElementById("selectInput"),
   languageInput: document.getElementById("languageInput"),
   fetchButton: document.getElementById("fetchButton"),
   status: document.getElementById("status"),
@@ -240,11 +241,12 @@ async function handleSearchSubmit(event) {
     elements.objectInput.value,
     elements.endpointOverride.value,
     elements.scopeInput.value,
+    elements.selectInput.value,
     elements.languageInput.value
   );
 }
 
-async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", languageInput = "") {
+async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", selectInput = "", languageInput = "") {
 
   const activeConfig = getConfigById(state.activeConfigId);
   if (!activeConfig) {
@@ -261,8 +263,9 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
   }
 
   const normalizedScope = String(scopeInput || "").trim();
+  const normalizedSelect = String(selectInput || "").trim();
   const normalizedLanguage = String(languageInput || "").trim();
-  syncSearchParams(parsed.id, endpointOverride || "", normalizedScope, normalizedLanguage);
+  syncSearchParams(parsed.id, endpointOverride || "", normalizedScope, normalizedSelect, normalizedLanguage);
 
   elements.fetchButton.disabled = true;
   renderStatus(elements.status, "Lade Daten...", "info");
@@ -272,7 +275,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
       activeConfig,
       parsed.endpoint,
       parsed.id,
-      { scope: normalizedScope, language: normalizedLanguage }
+      { scope: normalizedScope, select: normalizedSelect, language: normalizedLanguage }
     );
     state.lastPayload = json;
 
@@ -311,7 +314,7 @@ async function executeSearch(rawInput, endpointOverride = "", scopeInput = "", l
   }
 }
 
-function syncSearchParams(id, endpointOverride, scope, language) {
+function syncSearchParams(id, endpointOverride, scope, select, language) {
   const url = new URL(window.location.href);
   url.searchParams.set("id", id);
 
@@ -325,6 +328,12 @@ function syncSearchParams(id, endpointOverride, scope, language) {
     url.searchParams.set("scope", scope);
   } else {
     url.searchParams.delete("scope");
+  }
+
+  if (select) {
+    url.searchParams.set("select", select);
+  } else {
+    url.searchParams.delete("select");
   }
 
   if (language) {
@@ -341,6 +350,7 @@ function applySearchFromUrl() {
   const queryId = params.get("id");
   const queryEndpoint = params.get("endpoint");
   const queryScope = params.get("scope");
+  const querySelect = params.get("select");
   const queryLanguage = params.get("language");
 
   if (!queryId) {
@@ -357,6 +367,10 @@ function applySearchFromUrl() {
     elements.scopeInput.value = queryScope;
   }
 
+  if (querySelect) {
+    elements.selectInput.value = querySelect;
+  }
+
   if (queryLanguage !== null) {
     elements.languageInput.value = queryLanguage;
   }
@@ -365,6 +379,7 @@ function applySearchFromUrl() {
     queryId,
     elements.endpointOverride.value,
     elements.scopeInput.value,
+    elements.selectInput.value,
     elements.languageInput.value
   );
 }
